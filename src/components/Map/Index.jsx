@@ -1,12 +1,34 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { Marker } from "react-native-maps";
+import { hardcodedCities } from "../../../hardcodedCities";
+import { useRef, useEffect } from "react";
+import * as Location from "expo-location";
 
-import { hardcodedCities } from '../../../hardcodedCities';
-import { useRef } from 'react';
+import {
+  Container,
+  StyledMap,
+  StyledButton,
+  ButtonText,
+  ButtonContainer,
+} from "./Style";
 
 export default function Map() {
-  
-  const mapRef = useRef(null)
+  const mapRef = useRef(null);
+
+  const getLocationAsync = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.log("Permission to access location was denied");
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    console.log("Current location:", location);
+    // Handle the obtained location data as needed
+  };
+
+  useEffect(() => {
+    getLocationAsync();
+  }, []);
 
   const moveToCity = (city) => {
     const { latitude, longitude } = city.coordinates;
@@ -18,77 +40,23 @@ export default function Map() {
     };
     // setInitialRegion(region);
     mapRef.current.animateToRegion(region, 3000);
-  }
+  };
 
   return (
-    <View style={styles.container}>
-      {/* <Text>Open up App.js to start working on your app!</Text> */}
-      <MapView initialRegion={{latitude: 35.6895, longitude: 139.6917, latitudeDelta: 2, longitudeDelta: 2}}
-          style={styles.map}
-          ref={mapRef}
-          mapType={'hybrid'}
-          provider={'google'}
-          showsUserLocation
-          showsMyLocationButton
-          mapPadding={{
-            top: 40,
-            right: 10,
-            bottom: 10,
-            left: 10,
-          }}
-          >
-            {hardcodedCities.map((city) => (
-                <Marker key={city.id} coordinate={city.coordinates}></Marker>
-            ))}
-
-          </MapView>
-
-      <View // ButtonContainer
-        style={styles.buttonContainer}>
+    <Container>
+      <StyledMap ref={mapRef}>
         {hardcodedCities.map((city) => (
-          <TouchableOpacity
-            key={city.id}
-            onPress={() => moveToCity(city)}
-            style={styles.button}>
-            <Text selectable selectionColor={'#FF0000'} style={{ color: 'white' }}>{city.name}</Text>
-          </TouchableOpacity>
+          <Marker key={city.id} coordinate={city.coordinates}></Marker>
         ))}
-      </View>
-    </View>
+      </StyledMap>
+
+      <ButtonContainer>
+        {hardcodedCities.map((city) => (
+          <StyledButton key={city.id} onPress={() => moveToCity(city)}>
+            <ButtonText>{city.name}</ButtonText>
+          </StyledButton>
+        ))}
+      </ButtonContainer>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  map: { ...StyleSheet.absoluteFillObject,
-    zIndex: -1
-  },
-  buttonContainer: {
-    display: 'flex',
-    position: 'absolute',
-    bottom: '10%',
-    left: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    zIndex: 1,
-  },
-  button: {
-    width: '50%',
-    height: 40,
-    justifyContent: 'center',
-    marginTop: 10,
-    borderRadius: 80,
-    overflow: 'hidden',
-    backgroundColor: 'darkgreen',
-    alignItems: 'center',
-    color: 'white',
-  },
-});
-
-
