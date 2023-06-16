@@ -21,7 +21,12 @@ export const Title = styled.Text`
   border-radius: 50px;
 `;
 
-export const Input = styled.TextInput`
+export const Input = styled.TextInput.attrs({
+  placeholder: "Teste",
+  keyboardType: "numeric",
+  returnKeyType: "search",
+  secureTextEntry: true,
+})`
   text-align: center;
   width: 200px;
   height: 50px;
@@ -30,3 +35,4 @@ export const Input = styled.TextInput`
   border-radius: 50px;
   margin: 20px;
 `;
+

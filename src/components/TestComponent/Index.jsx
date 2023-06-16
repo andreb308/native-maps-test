@@ -10,14 +10,7 @@ export default function Index() {
     <Container>
       {/* Text + Input Container */}
       <Title onPress={() => setTexto("Cliclou")}>App Title</Title>
-      <Input
-      // onChangeText={(texto) => setTexto(texto)}
-      // value={texto}
-      // placeholder="Teste"
-      // keyboardType="numeric"
-      // returnKeyType='search'
-      // secureTextEntry
-      />
+      <Input onChangeText={(texto) => setTexto(texto)} value={texto} />
       <Text style={{ color: "white", fontSize: 20 }}>{texto}</Text>
     </Container>
   );
