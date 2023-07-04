@@ -1,8 +1,9 @@
-import MapView, { Marker } from "react-native-maps";
+import { Marker } from "react-native-maps";
 import { hardcodedCities } from "../../../hardcodedCities";
 import { useRef, useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { TextInput } from "react-native";
+import { ActivityIndicator } from "react-native";
 
 import {
   Container,
@@ -10,17 +11,17 @@ import {
   StyledInput,
   InputIcon,
   SearchContainer,
+  StyledButton,
+  ButtonText,
+  ButtonContainer,
+  LoadingView,
 } from "./Style";
 
 export default function Map() {
   const mapRef = useRef({});
   const [locationSearch, setLocationSearch] = useState("");
-  const [reg, setReg] = useState({
-    latitude: 35.6895,
-    longitude: 139.6917,
-    latitudeDelta: 0.02,
-    longitudeDelta: 0.02,
-  });
+  const [loading, setLoading] = useState(false);
+  const [cityList, setCityList] = useState(hardcodedCities);
 
   const getLocationAsync = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -37,54 +38,46 @@ export default function Map() {
     getLocationAsync();
   }, []);
 
-  const moveToCity = (latitude, longitude) => {
+  const moveToCity = (city) => {
+    const { latitude, longitude } = city.coordinates;
     const region = {
       latitude,
       longitude,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     };
-    console.log(latitude);
-    console.log(longitude);
-    console.log(region);
     // setInitialRegion(region);
+    setLoading(true);
+    mapRef.current.animateToRegion(region, 2000);
+    setTimeout(() => setLoading(false), 2000);
   };
-
-  useEffect(() => {
-    let { latitude, latitudeDelta, longitude, longitudeDelta } = reg;
-    mapRef.current.animateToRegion(
-      { latitude, longitude, latitudeDelta, longitudeDelta },
-      300
-    );
-    console.log("Effect");
-    console.log(reg);
-  }, [reg]);
 
   const handleLocationSearch = async () => {
     try {
-      console.log("trying");
       const response = await fetch(
-        "https://geocode.maps.co/search?q=calif%C3%B3rnia"
+        `https://geocode.maps.co/search?q=${locationSearch}`
       );
-      if (response.ok) {
-        const data = await response.json();
-        if (data && data.length > 0) {
-          const latitude = data[0].lat;
-          const longitude = data[0].lon;
-          const region = {
-            latitude,
-            longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          };
-          console.log("Region updated");
-          console.log(region);
-          setReg(region);
-        } else {
-          console.log("No geocoding data found.");
-        }
+      const data = await response.json();
+      if (data && data.length > 0) {
+        cityName = data[0].display_name;
+        const latitude = data[0].lat;
+        const longitude = data[0].lon;
+        setCityList((prevList) =>
+          [
+            ...prevList,
+            {
+              id: prevList[2].id + 1,
+              name: cityName.split(",")[0].trim(),
+              coordinates: {
+                latitude: parseFloat(latitude),
+                longitude: parseFloat(longitude),
+              },
+            },
+          ].slice(-3)
+        );
+        setLocationSearch("");
       } else {
-        console.log("Geocoding API request failed.");
+        console.log("No geocoding data found.");
       }
     } catch (error) {
       console.log("Error occurred while fetching geocoding data:", error);
@@ -93,12 +86,31 @@ export default function Map() {
 
   return (
     <>
+      {loading && (
+        <LoadingView>
+          <ActivityIndicator size={"large"} animating={true} color="red" />
+        </LoadingView>
+      )}
+
+      <StyledMap ref={mapRef}>
+        {cityList.map((city) => (
+          <Marker key={city.id} coordinate={city.coordinates}></Marker>
+        ))}
+      </StyledMap>
+
       <Container>
-        <StyledMap ref={mapRef} style={{ width: "100%", height: "100%" }}>
-          {hardcodedCities.map((city) => (
-            <Marker key={city.id} coordinate={city.coordinates}></Marker>
+        <ButtonContainer>
+          {cityList.map((city) => (
+            <StyledButton
+              key={city.id}
+              onPress={() => {
+                moveToCity(city);
+              }}
+            >
+              <ButtonText key={city.id}>{city.name}</ButtonText>
+            </StyledButton>
           ))}
-        </StyledMap>
+        </ButtonContainer>
 
         <SearchContainer>
           <StyledInput
@@ -106,7 +118,7 @@ export default function Map() {
             onChangeText={(e) => setLocationSearch(e)}
             onSubmitEditing={() => handleLocationSearch()}
           />
-          <TextInput />
+          <TextInput /> {/* ANALYZE UTILITY LATER */}
           <InputIcon />
         </SearchContainer>
       </Container>
