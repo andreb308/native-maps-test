@@ -118,7 +118,7 @@ export default function Map() {
             onChangeText={(e) => setLocationSearch(e)}
             onSubmitEditing={() => handleLocationSearch()}
           />
-          <TextInput /> {/* ANALYZE UTILITY LATER */}
+          <TextInput />
           <InputIcon />
         </SearchContainer>
       </Container>
