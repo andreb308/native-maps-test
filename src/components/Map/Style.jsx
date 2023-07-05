@@ -64,37 +64,36 @@ export const StyledMap = styled(MapView).attrs(MapViewAttrs)`
   z-index: -1;
 `;
 
-export const StyledButton = styled.TouchableOpacity`
-  width: 50%;
-  height: 40px;
-  justify-content: center;
-  /* margin-top: 10px; */
-  border-radius: 80px;
-  overflow: hidden;
-  background-color: darkgreen;
-  align-items: center;
-  color: white;
-`;
+// export const StyledButton = styled.TouchableOpacity`
+//   width: 50%;
+//   height: 40px;
+//   justify-content: center;
+//   /* margin-top: 10px; */
+//   border-radius: 80px;
+//   overflow: hidden;
+//   background-color: darkgreen;
+//   align-items: center;
+//   color: white;
+// `;
 
-export const ButtonText = styled.Text`
-  color: white;
-`;
+// export const ButtonText = styled.Text`
+//   color: white;
+// `;
 
-export const ButtonContainer = styled.View.attrs(pointerEventsAttrs)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 20%;
-  z-index: 1;
-  margin: 10%;
-  /* background-color: */
-`;
+// export const ButtonContainer = styled.View.attrs(pointerEventsAttrs)`
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   width: 100%;
+//   height: 20%;
+//   z-index: 1;
+//   margin: 10%;
+//   /* background-color: */
+// `;
 
 export const StyledInput = styled.TextInput.attrs({
   placeholder: "Digite um local",
   cursorColor: "grey",
-  inlineImageLeft: "location-pin-svgrepo-com",
   returnKeyType: "search",
 })`
   background-color: white;
@@ -122,6 +121,6 @@ export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
   justify-content: center;
   width: 100%;
   height: 60px;
-  margin-top: 10%;
+  margin-bottom: 5%;
   /* bottom: 10%; */
 `;

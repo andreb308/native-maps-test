@@ -11,9 +11,9 @@ import {
   StyledInput,
   InputIcon,
   SearchContainer,
-  StyledButton,
-  ButtonText,
-  ButtonContainer,
+  // StyledButton,
+  // ButtonText,
+  // ButtonContainer,
   LoadingView,
 } from "./Style";
 
@@ -53,37 +53,54 @@ export default function Map() {
   };
 
   const handleLocationSearch = async () => {
+    let response = undefined;
+    let data = {};
+
+    // Fetching coordinates from Maps.co API
     try {
-      const response = await fetch(
+      response = await fetch(
         `https://geocode.maps.co/search?q=${locationSearch}`
       );
-      const data = await response.json();
-      if (data && data.length > 0) {
-        cityName = data[0].display_name;
-        const latitude = data[0].lat;
-        const longitude = data[0].lon;
-        setCityList((prevList) =>
-          [
-            ...prevList,
-            {
-              id: prevList[2].id + 1,
-              name: cityName.split(",")[0].trim(),
-              coordinates: {
-                latitude: parseFloat(latitude),
-                longitude: parseFloat(longitude),
-              },
-            },
-          ].slice(-3)
-        );
-        setLocationSearch("");
-      } else {
-        console.log("No geocoding data found.");
-      }
+      data = await response.json();
+      setLocationSearch("");
     } catch (error) {
       console.log("Error occurred while fetching geocoding data:", error);
     }
-  };
 
+    if (data && data.length > 0) {
+      cityName = data[0].display_name;
+      const latitude = parseFloat(data[0].lat);
+      const longitude = parseFloat(data[0].lon);
+
+      setCityList((prevList) =>
+        [
+          ...prevList,
+          {
+            id: prevList[2].id + 1,
+            name: cityName.split(",")[0].trim(),
+            coordinates: {
+              latitude,
+              longitude,
+            },
+          },
+        ].slice(-3)
+      );
+
+      const region = {
+        latitude,
+        longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      };
+
+      // Enables Loading Animation while the map is moving
+      setLoading(true);
+      mapRef.current.animateToRegion(region, 2000);
+      setTimeout(() => setLoading(false), 2000);
+    } else {
+      console.log("No geocoding data found.");
+    }
+  };
   return (
     <>
       {loading && (
@@ -99,7 +116,7 @@ export default function Map() {
       </StyledMap>
 
       <Container>
-        <ButtonContainer>
+        {/* <ButtonContainer>
           {cityList.map((city) => (
             <StyledButton
               key={city.id}
@@ -110,7 +127,7 @@ export default function Map() {
               <ButtonText key={city.id}>{city.name}</ButtonText>
             </StyledButton>
           ))}
-        </ButtonContainer>
+        </ButtonContainer> */}
 
         <SearchContainer>
           <StyledInput
