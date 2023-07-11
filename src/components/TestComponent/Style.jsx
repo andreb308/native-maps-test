@@ -11,7 +11,8 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
   position: absolute;
-  top: ${Constants.statusBarHeight}px;
+  text-align: center;
+  top: ${Constants.statusBarHeight * 1.2}px;
   font-size: 30px;
   margin-top: 10px;
   background-color: pink;
@@ -23,9 +24,9 @@ export const Title = styled.Text`
 
 export const Input = styled.TextInput.attrs({
   placeholder: "Teste",
-  keyboardType: "numeric",
+  // keyboardType: "numeric",
   returnKeyType: "search",
-  secureTextEntry: true,
+  // secureTextEntry: true,
 })`
   text-align: center;
   width: 200px;
@@ -33,6 +34,5 @@ export const Input = styled.TextInput.attrs({
   background-color: pink;
   /* // paddingLeft: 20px; */
   border-radius: 50px;
-  margin: 20px;
+  margin: 5px;
 `;
-
