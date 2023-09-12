@@ -3,7 +3,7 @@ import MapView from "react-native-maps";
 import Constants from "expo-constants";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-const MapViewAttrs = {
+const MapViewAttrs : Object = {
   initialRegion: {
     latitude: 35.6895,
     longitude: 139.6917,
@@ -36,7 +36,7 @@ export const LoadingView = styled.View`
   z-index: 100;
 `;
 
-pointerEventsAttrs = {
+const pointerEventsAttrs: Object = {
   pointerEvents: "box-none",
 };
 

@@ -3,7 +3,16 @@ import React, { useState } from "react";
 
 import { Container, Title, Input } from "./Style";
 
-export default function Index({ navigation }) {
+import type { MaterialBottomTabScreenProps } from '@react-navigation/material-bottom-tabs';
+
+type RootTabParamList = { // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
+  Map: undefined,
+  Index: undefined,
+}
+
+type Props = MaterialBottomTabScreenProps<RootTabParamList, 'Index'>;
+
+export default function Index({ route, navigation } : Props) {
   const [texto, setTexto] = useState("");
 
   return (
@@ -12,7 +21,7 @@ export default function Index({ navigation }) {
       <Title onPress={() => setTexto("Cliclou")}>{"Título"}</Title>
 
       <Input
-        onChangeText={(texto) => setTexto(texto)}
+        onChangeText={(texto : string) => setTexto(texto)}
         value={texto}
         onSubmitEditing={() => navigation.navigate("Map")}
       />

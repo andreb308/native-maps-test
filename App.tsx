@@ -1,5 +1,5 @@
 import MapScreen from "./src/components/Map/Index";
-import IndexScreen from "./src/components/TestComponent/Index";
+import IndexScreen from "./src/components/TextScreen/Index";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -17,7 +17,11 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 //   // header: () => {},
 // };
 
-const Tab = createMaterialBottomTabNavigator();
+ type RootTabParamList = { // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
+  Map: undefined,
+  Index: undefined,
+}
+const Tab = createMaterialBottomTabNavigator<RootTabParamList>();
 
 export default function App() {
   return (
