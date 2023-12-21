@@ -2,8 +2,10 @@ import MapView, { Marker } from "react-native-maps";
 import { hardcodedCities } from "../../../hardcodedCities";
 import { useRef, useEffect, useState } from "react";
 import * as Location from "expo-location";
-import { TextInput } from "react-native";
-import { ActivityIndicator } from "react-native";
+import {
+  TextInput,
+  ActivityIndicator,
+} from "react-native";
 
 import {
   Container,
@@ -18,6 +20,9 @@ import {
 } from "./Style";
 
 import { GeocodeInfo } from "./Types";
+// import { Text } from "react-native-paper";
+
+const ANIMATION_DURATION = 1000;
 
 export default function Map() {
   const mapRef = useRef<MapView | null>(null);
@@ -40,54 +45,48 @@ export default function Map() {
     getLocationAsync();
   }, []);
 
-  
   const handleLocationSearch = async () => {
-    let response = undefined;
-    let data: GeocodeInfo;
-    
-    // Fetching coordinates from Maps.co API
     try {
-      response = await fetch(
+      const response = await fetch(
         `https://geocode.maps.co/search?q=${locationSearch}`
-        );
-        setLocationSearch("");
-      } catch (error) {
-        console.log("Error occurred while fetching geocoding data:", error);
-    }
-    
-    data = await response?.json();
-    if (data && data.length > 0) {
-      let cityName = data[0]!.display_name;
-      const latitude = parseFloat(data[0]!.lat);
-      const longitude = parseFloat(data[0]!.lon);
-
-      setCityList((prevList) =>
-      [
-          ...prevList,
-          {
-            id: prevList[2]!.id + 1,
-            name: cityName?.split(",")[0]!.trim() || "Cidade",
-            coordinates: {
-              latitude,
-              longitude,
-            },
-          },
-        ].slice(-3)
       );
-      
-      const region = {
-        latitude,
-        longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      };
-      
-      // Enables Loading Animation while the map is moving
-      setLoading(true);
-      mapRef.current?.animateToRegion(region, 2000);
-      setTimeout(() => setLoading(false), 2000);
-    } else {
-      console.log("No geocoding data found.");
+      const data: GeocodeInfo = await response?.json();
+
+      if (data && data.length > 0) {
+        const cityName = data[0]!.display_name;
+        const latitude = parseFloat(data[0]!.lat);
+        const longitude = parseFloat(data[0]!.lon);
+
+        setCityList((prevList) =>
+          [
+            ...prevList,
+            {
+              id: prevList[2]!.id + 1,
+              name: cityName?.split(",")[0]!.trim() || "Cidade",
+              coordinates: {
+                latitude,
+                longitude,
+              },
+            },
+          ].slice(-3)
+        );
+
+        const region = {
+          latitude,
+          longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        };
+
+        // Enables Loading Animation while the map is moving
+        setLoading(true);
+        mapRef.current?.animateToRegion(region, ANIMATION_DURATION);
+        setTimeout(() => setLoading(false), ANIMATION_DURATION);
+      } else {
+        console.log("No geocoding data found.");
+      }
+    } catch (error) {
+      console.log("Error occurred while fetching geocoding data:", error);
     }
   };
   return (
@@ -101,17 +100,16 @@ export default function Map() {
       <StyledMap ref={mapRef}>
         {cityList.map((city) => (
           <Marker key={city.id} coordinate={city.coordinates}></Marker>
-          ))}
+        ))}
       </StyledMap>
 
       <Container>
-
         <SearchContainer>
           <StyledInput
             value={locationSearch}
             onChangeText={(e) => setLocationSearch(e)}
             onSubmitEditing={() => handleLocationSearch()}
-            />
+          />
           <TextInput />
           <InputIcon />
         </SearchContainer>
@@ -120,7 +118,8 @@ export default function Map() {
   );
 }
 
-{/* <ButtonContainer>
+{
+  /* <ButtonContainer>
   {cityList.map((city) => (
     <StyledButton
     key={city.id}
@@ -131,7 +130,8 @@ export default function Map() {
     <ButtonText key={city.id}>{city.name}</ButtonText>
     </StyledButton>
     ))}
-  </ButtonContainer> */}
+  </ButtonContainer> */
+}
 // const moveToCity = (city) => {
 //   const { latitude, longitude } = city.coordinates;
 //   const region = {

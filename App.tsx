@@ -17,17 +17,27 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 //   // header: () => {},
 // };
 
- type RootTabParamList = { // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
-  Map: undefined,
-  Index: undefined,
-}
+type RootTabParamList = {
+  // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
+  Map: undefined;
+  Index: undefined;
+};
 const Tab = createMaterialBottomTabNavigator<RootTabParamList>();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Index"
+        barStyle={{
+          // height: 30,
+          // display: "flex",
+          // alignItems: "center",
+          // justifyContent: "center",
+          // margin: 0,
+          // padding: 0, // Set your desired height here
+          // Other styling properties can be added here
+        }}
+        initialRouteName="Map"
         shifting
         activeColor={"red"}
         inactiveColor={"black"}

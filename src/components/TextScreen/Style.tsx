@@ -16,10 +16,8 @@ export const Title = styled.Text`
   font-size: 30px;
   margin-top: 10px;
   background-color: pink;
-  padding: 5px;
-  padding-left: 50px;
-  padding-right: 50px;
-  border-radius: 50px;
+  padding: 5px 50px;
+  /* padding-top: 5px; */
 `;
 
 export const Input = styled.TextInput.attrs({

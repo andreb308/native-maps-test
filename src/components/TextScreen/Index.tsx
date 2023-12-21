@@ -1,27 +1,37 @@
 import { Text } from "react-native";
 import React, { useState } from "react";
-
 import { Container, Title, Input } from "./Style";
 
-import type { MaterialBottomTabScreenProps } from '@react-navigation/material-bottom-tabs';
+import type { MaterialBottomTabScreenProps } from "@react-navigation/material-bottom-tabs";
 
-type RootTabParamList = { // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
-  Map: undefined,
-  Index: undefined,
-}
+type RootTabParamList = {
+  // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
+  Map: undefined;
+  Index: undefined;
+};
 
-type Props = MaterialBottomTabScreenProps<RootTabParamList, 'Index'>;
+type Props = MaterialBottomTabScreenProps<RootTabParamList, "Index">;
 
-export default function Index({ route, navigation } : Props) {
+export default function Index({ route, navigation }: Props) {
   const [texto, setTexto] = useState("");
 
   return (
     <Container>
       {/* Text + Input Container */}
-      <Title onPress={() => setTexto("Cliclou")}>{"Título"}</Title>
+      <Title
+        onPress={async () => {
+          const textTest = await fetch(
+            "https://lace-fifth-dragonfly.glitch.me/"
+          ).then((res) => res.text());
+          setTexto(textTest);
+          console.log(textTest);
+        }}
+      >
+        {"Título"}
+      </Title>
 
       <Input
-        onChangeText={(texto : string) => setTexto(texto)}
+        onChangeText={(texto: string) => setTexto(texto)}
         value={texto}
         onSubmitEditing={() => navigation.navigate("Map")}
       />

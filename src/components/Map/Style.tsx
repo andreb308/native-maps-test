@@ -2,8 +2,45 @@ import styled from "styled-components/native";
 import MapView from "react-native-maps";
 import Constants from "expo-constants";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { Animated, Dimensions } from "react-native";
 
-const MapViewAttrs : Object = {
+const { width, height } = Dimensions.get("window");
+const CARD_HEIGHT = 220;
+const CARD_WIDTH = width * 0.8;
+const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
+
+export const Scroller = styled(Animated.ScrollView).attrs({
+  horizontal: true,
+  scrollEventThrottle: 1,
+  showsHorizontalScrollIndicator: false,
+  pagingEnabled: true,
+  snapToInterval: CARD_WIDTH + 20,
+})`
+  position: absolute;
+  background-color: pink;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding-top: 10px;
+`;
+/*
+
+elevation: 2,
+
+
+*/
+export const BottomCard = styled.View`
+  background-color: #fff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin: 0 10px; /* Margin shorthand for horizontal margin */
+  box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.3); /* Standard CSS box-shadow */
+  height: ${CARD_HEIGHT}px;
+  width: ${CARD_WIDTH}px;
+  overflow: hidden;
+`;
+
+const MapViewAttrs: Object = {
   initialRegion: {
     latitude: 35.6895,
     longitude: 139.6917,
@@ -34,6 +71,7 @@ export const LoadingView = styled.View`
   align-items: center;
   justify-content: center;
   z-index: 100;
+  background-color: pink;
 `;
 
 const pointerEventsAttrs: Object = {
@@ -71,6 +109,40 @@ export const StyledMap = styled(MapView).attrs(MapViewAttrs)`
 //   /* margin-top: 10px; */
 //   border-radius: 80px;
 //   overflow: hidden;
+
+export const StyledInput = styled.TextInput.attrs({
+  placeholder: "Digite um local",
+  cursorColor: "grey",
+  returnKeyType: "search",
+})`
+  background-color: white;
+  width: 80%;
+  height: 60px;
+  border-radius: 100px;
+  position: relative;
+  padding-left: 50px;
+`;
+
+export const InputIcon = styled(Icon).attrs({
+  name: "location-on",
+  size: 30,
+  color: "#5f5f5f",
+})`
+  position: absolute;
+  left: 50px;
+  bottom: 50%;
+`;
+
+export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
+  position: relative;
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+  margin-bottom: 5%;
+  /* bottom: 10%; */
+`;
 //   background-color: darkgreen;
 //   align-items: center;
 //   color: white;
@@ -91,36 +163,7 @@ export const StyledMap = styled(MapView).attrs(MapViewAttrs)`
 //   /* background-color: */
 // `;
 
-export const StyledInput = styled.TextInput.attrs({
-  placeholder: "Digite um local",
-  cursorColor: "grey",
-  returnKeyType: "search",
-})`
-  background-color: white;
-  width: 80%;
-  height: 60px;
-  border-radius: 100px;
-  position: relative;
-  padding-left: 60px;
-`;
+export const newLoadingView = styled(LoadingView)`
+    background-color: blue;
 
-export const InputIcon = styled(Icon).attrs({
-  name: "location-on",
-  size: 30,
-  color: "#5f5f5f",
-})`
-  position: absolute;
-  left: 15%;
-  bottom: 50%;
-`;
-
-export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
-  /* position: absolute; */
-  background-color: transparent;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 60px;
-  margin-bottom: 5%;
-  /* bottom: 10%; */
 `;
