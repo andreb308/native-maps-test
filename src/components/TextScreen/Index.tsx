@@ -18,20 +18,10 @@ export default function Index({ route, navigation }: Props) {
   return (
     <Container>
       {/* Text + Input Container */}
-      <Title
-        onPress={async () => {
-          const textTest = await fetch(
-            "https://lace-fifth-dragonfly.glitch.me/"
-          ).then((res) => res.text());
-          setTexto(textTest);
-          console.log(textTest);
-        }}
-      >
-        {"Título"}
-      </Title>
+      <Title onPress={() => setTexto("Cliclou")}>{"Título"}</Title>
 
       <Input
-        onChangeText={(texto: string) => setTexto(texto)}
+        onChangeText={(texto) => setTexto(texto)}
         value={texto}
         onSubmitEditing={() => navigation.navigate("Map")}
       />

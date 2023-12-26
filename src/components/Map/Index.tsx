@@ -2,10 +2,7 @@ import MapView, { Marker } from "react-native-maps";
 import { hardcodedCities } from "../../../hardcodedCities";
 import { useRef, useEffect, useState } from "react";
 import * as Location from "expo-location";
-import {
-  TextInput,
-  ActivityIndicator,
-} from "react-native";
+import { ActivityIndicator } from "react-native";
 
 import {
   Container,
@@ -19,7 +16,7 @@ import {
   LoadingView,
 } from "./Style";
 
-import { GeocodeInfo } from "./Types";
+import BottomScroller from "./Templates/BottomScroller";
 // import { Text } from "react-native-paper";
 
 const ANIMATION_DURATION = 1000;
@@ -46,54 +43,56 @@ export default function Map() {
   }, []);
 
   const handleLocationSearch = async () => {
+    let data;
     try {
       const response = await fetch(
-        `https://geocode.maps.co/search?q=${locationSearch}`
+        `https://geocode.maps.co/search?q=${locationSearch}&api_key=658a0272502b7149047897ubc10ad65`
       );
-      const data: GeocodeInfo = await response?.json();
-
-      if (data && data.length > 0) {
-        const cityName = data[0]!.display_name;
-        const latitude = parseFloat(data[0]!.lat);
-        const longitude = parseFloat(data[0]!.lon);
-
-        setCityList((prevList) =>
-          [
-            ...prevList,
-            {
-              id: prevList[2]!.id + 1,
-              name: cityName?.split(",")[0]!.trim() || "Cidade",
-              coordinates: {
-                latitude,
-                longitude,
-              },
-            },
-          ].slice(-3)
-        );
-
-        const region = {
-          latitude,
-          longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        };
-
-        // Enables Loading Animation while the map is moving
-        setLoading(true);
-        mapRef.current?.animateToRegion(region, ANIMATION_DURATION);
-        setTimeout(() => setLoading(false), ANIMATION_DURATION);
-      } else {
-        console.log("No geocoding data found.");
-      }
+      data = await response?.json();
     } catch (error) {
       console.log("Error occurred while fetching geocoding data:", error);
+      return;
     }
+
+    if (!data || data.length === 0) {
+      console.log("No geocoding data found.");
+      return;
+    }
+
+    const cityName = data[0].display_name;
+    const latitude = parseFloat(data[0].lat);
+    const longitude = parseFloat(data[0].lon);
+
+    setCityList((prevList) =>
+      [
+        ...prevList,
+        {
+          id: prevList[2]!.id + 1,
+          name: cityName.split(",")[0].trim() || "Cidade",
+          coordinates: {
+            latitude,
+            longitude,
+          },
+        },
+      ].slice(-3)
+    );
+
+    const region = {
+      latitude,
+      longitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    };
+
+    setLoading(true);
+    mapRef.current?.animateToRegion(region, ANIMATION_DURATION);
+    setTimeout(() => setLoading(false), ANIMATION_DURATION);
   };
   return (
     <>
       {loading && (
         <LoadingView>
-          <ActivityIndicator size={"large"} animating={true} color="red" />
+          <ActivityIndicator size={"large"} animating={true} color='red' />
         </LoadingView>
       )}
 
@@ -110,9 +109,11 @@ export default function Map() {
             onChangeText={(e) => setLocationSearch(e)}
             onSubmitEditing={() => handleLocationSearch()}
           />
-          <TextInput />
+          {/* <TextInput /> */}
           <InputIcon />
         </SearchContainer>
+
+        <BottomScroller />
       </Container>
     </>
   );

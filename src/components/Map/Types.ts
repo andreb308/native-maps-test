@@ -12,3 +12,15 @@ export type GeocodeInfo = Array<{
   type: string;
   importance: number;
 }>;
+
+export type CakeInfo = Array<{
+  storeID: number;
+  storeName: string;
+  latitude: number;
+  longitude: number;
+  city: string;
+  description: string;
+  price: number;
+  flavorName: string;
+  rating: number;
+}>;

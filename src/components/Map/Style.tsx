@@ -9,48 +9,21 @@ const CARD_HEIGHT = 220;
 const CARD_WIDTH = width * 0.8;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
-export const Scroller = styled(Animated.ScrollView).attrs({
-  horizontal: true,
-  scrollEventThrottle: 1,
-  showsHorizontalScrollIndicator: false,
-  pagingEnabled: true,
-  snapToInterval: CARD_WIDTH + 20,
-})`
-  position: absolute;
-  background-color: pink;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  padding-top: 10px;
-`;
-/*
-
-elevation: 2,
-
-
-*/
-export const BottomCard = styled.View`
-  background-color: #fff;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  margin: 0 10px; /* Margin shorthand for horizontal margin */
-  box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.3); /* Standard CSS box-shadow */
-  height: ${CARD_HEIGHT}px;
-  width: ${CARD_WIDTH}px;
-  overflow: hidden;
-`;
+const pointerEventsAttrs: Object = {
+  pointerEvents: "box-none",
+};
 
 const MapViewAttrs: Object = {
   initialRegion: {
-    latitude: 35.6895,
-    longitude: 139.6917,
-    latitudeDelta: 0.02,
-    longitudeDelta: 0.02,
+    latitude: -22.2827158,
+    longitude: -42.5314,
+    latitudeDelta: 0.002,
+    longitudeDelta: 0.002,
   },
   mapType: "standard",
   provider: "google",
   showsUserLocation: true,
-  showsMyLocationButton: true,
+  showsMyLocationButton: false,
   showsScale: true,
   mapPadding: {
     top: Constants.statusBarHeight,
@@ -59,6 +32,36 @@ const MapViewAttrs: Object = {
     left: 5,
   },
 };
+
+export const Scroller = styled(Animated.ScrollView).attrs({
+  horizontal: true,
+  scrollEventThrottle: 1,
+  showsHorizontalScrollIndicator: false,
+  pagingEnabled: true,
+  snapToInterval: CARD_WIDTH + 20,
+})`
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 10px 0;
+`;
+
+export const BottomCard = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.7,
+})`
+  align-items: center;
+  justify-content: center;
+  background-color: #fafafa;
+  border-radius: 10px;
+  /* border-top-right-radius: 50px; */
+  margin: 0 10px; /* Margin shorthand for horizontal margin */
+  box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.3); /* Standard CSS box-shadow */
+  border: 1px solid #ddd;
+  height: ${CARD_HEIGHT}px;
+  width: ${CARD_WIDTH}px;
+  overflow: hidden;
+`;
 
 export const LoadingView = styled.View`
   width: 100%;
@@ -71,12 +74,8 @@ export const LoadingView = styled.View`
   align-items: center;
   justify-content: center;
   z-index: 100;
-  background-color: pink;
+  background-color: #00000033;
 `;
-
-const pointerEventsAttrs: Object = {
-  pointerEvents: "box-none",
-};
 
 export const Container = styled.View.attrs(pointerEventsAttrs)`
   width: 100%;
@@ -88,7 +87,7 @@ export const Container = styled.View.attrs(pointerEventsAttrs)`
   left: 0;
   /* z-index: 1; */
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
 `;
 
 export const StyledMap = styled(MapView).attrs(MapViewAttrs)`
@@ -102,25 +101,18 @@ export const StyledMap = styled(MapView).attrs(MapViewAttrs)`
   z-index: -1;
 `;
 
-// export const StyledButton = styled.TouchableOpacity`
-//   width: 50%;
-//   height: 40px;
-//   justify-content: center;
-//   /* margin-top: 10px; */
-//   border-radius: 80px;
-//   overflow: hidden;
-
 export const StyledInput = styled.TextInput.attrs({
   placeholder: "Digite um local",
   cursorColor: "grey",
   returnKeyType: "search",
 })`
-  background-color: white;
-  width: 80%;
+  background-color: #fff;
+  width: 100%;
   height: 60px;
   border-radius: 100px;
   position: relative;
   padding-left: 50px;
+  border: 2px solid #eaeaea;
 `;
 
 export const InputIcon = styled(Icon).attrs({
@@ -129,8 +121,7 @@ export const InputIcon = styled(Icon).attrs({
   color: "#5f5f5f",
 })`
   position: absolute;
-  left: 50px;
-  bottom: 50%;
+  left: 15px;
 `;
 
 export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
@@ -138,12 +129,13 @@ export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
   background-color: transparent;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 80%;
   height: 60px;
-  margin-bottom: 5%;
-  /* bottom: 10%; */
+  margin-top: 48px;
 `;
-//   background-color: darkgreen;
+export const newLoadingView = styled(LoadingView)`
+  background-color: blue;
+`;
 //   align-items: center;
 //   color: white;
 // `;
@@ -163,7 +155,10 @@ export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
 //   /* background-color: */
 // `;
 
-export const newLoadingView = styled(LoadingView)`
-    background-color: blue;
-
-`;
+// export const StyledButton = styled.TouchableOpacity`
+//   width: 50%;
+//   height: 40px;
+//   justify-content: center;
+//   /* margin-top: 10px; */
+//   border-radius: 80px;
+//   overflow: hidden;

@@ -1,6 +1,9 @@
 node_modules/
 .expo/
 dist/
+%ProgramData%/
+.yarn/
+.vscode/
 npm-debug.*
 *.jks
 *.p8
@@ -11,6 +14,7 @@ npm-debug.*
 web-build/
 .env
 env.d.ts
+.yarnrc.yml
 
 # macOS
 .DS_Store
