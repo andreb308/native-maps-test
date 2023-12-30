@@ -1,8 +1,9 @@
 import { Text } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Container, Title, Input } from "./Style";
 
 import type { MaterialBottomTabScreenProps } from "@react-navigation/material-bottom-tabs";
+import { useAppContext } from "../AppContext";
 
 type RootTabParamList = {
   // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
@@ -13,7 +14,7 @@ type RootTabParamList = {
 type Props = MaterialBottomTabScreenProps<RootTabParamList, "Index">;
 
 export default function Index({ route, navigation }: Props) {
-  const [texto, setTexto] = useState("");
+  const { texto, setTexto } = useAppContext()
 
   return (
     <Container>

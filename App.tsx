@@ -3,6 +3,7 @@ import IndexScreen from "./src/components/TextScreen/Index";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { AppContextProvider } from "./src/components/AppContext";
 
 // const bottomTabOptions = {
 //   tabBarShowLabel: false,
@@ -26,48 +27,52 @@ const Tab = createMaterialBottomTabNavigator<RootTabParamList>();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        barStyle={{
-          // height: 30,
-          // display: "flex",
-          // alignItems: "center",
-          // justifyContent: "center",
-          // margin: 0,
-          // padding: 0, // Set your desired height here
-          // Other styling properties can be added here
-        }}
-        initialRouteName="Map"
-        shifting
-        activeColor={"red"}
-        inactiveColor={"black"}
-        keyboardHidesNavigationBar
-      >
-        <Tab.Screen
-          name="Map"
-          component={MapScreen}
-          options={{
-            tabBarLabel: "MapView",
-            tabBarIcon: ({ focused, color }) => (
-              <Icon
-                name={focused ? "location-on" : "location-off"}
-                color={color}
-                size={26}
-              />
-            ),
-          }}
-        ></Tab.Screen>
-        <Tab.Screen
-          name="Index"
-          component={IndexScreen}
-          options={{
-            tabBarLabel: "TypeTest",
-            tabBarIcon: ({ color }) => (
-              <Icon name="location-history" color={color} size={26} />
-            ),
-          }}
-        ></Tab.Screen>
-      </Tab.Navigator>
-    </NavigationContainer>
+    <AppContextProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          barStyle={
+            {
+              // height: 30,
+              // display: "flex",
+              // alignItems: "center",
+              // justifyContent: "center",
+              // margin: 0,
+              // padding: 0, // Set your desired height here
+              // Other styling properties can be added here
+            }
+          }
+          initialRouteName='Map'
+          shifting
+          activeColor={"red"}
+          inactiveColor={"black"}
+          keyboardHidesNavigationBar
+        >
+          <Tab.Screen
+            name='Map'
+            component={MapScreen}
+            options={{
+              tabBarLabel: "MapView",
+              tabBarIcon: ({ focused, color }) => (
+                <Icon
+                  name={focused ? "location-on" : "location-off"}
+                  color={color}
+                  size={26}
+                />
+              ),
+            }}
+          ></Tab.Screen>
+          <Tab.Screen
+            name='Index'
+            component={IndexScreen}
+            options={{
+              tabBarLabel: "TypeTest",
+              tabBarIcon: ({ color }) => (
+                <Icon name='location-history' color={color} size={26} />
+              ),
+            }}
+          ></Tab.Screen>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </AppContextProvider>
   );
 }
