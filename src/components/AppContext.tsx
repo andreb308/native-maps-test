@@ -28,7 +28,7 @@ interface AppContextInterface {
   setCityList: (cities: Cities) => void;
   texto: string;
   setTexto: (text: string) => void;
-  mapRef: React.RefObject<MapView | null>;
+  mapRef: React.RefObject<MapView>;
   handleFetch: () => Promise<void>;
 }
 const AppContext = createContext<AppContextInterface | null>(null);
@@ -49,7 +49,7 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
   ]);
   const [cityList, setCityList] = useState<Cities>(hardcodedCities);
   const [texto, setTexto] = useState("");
-  const mapRef = useRef<MapView | null>(null);
+  const mapRef = useRef<MapView>(new MapView({}));
   const [loading, setLoading] = useState(false);
 
   // The handleFetch function

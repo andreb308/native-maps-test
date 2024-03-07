@@ -1,18 +1,18 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
 
-function Loading() {
+const Loading: React.FC = () => {
   return (
     <LoadingView>
-      <ActivityIndicator size={"large"} animating={true} color='red' />
+      <ActivityIndicator size={"large"} animating={true} color="red" />
     </LoadingView>
   );
-}
+};
 
 export default Loading;
 
 /*****************************************************************/
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
 export const LoadingView = styled.View`
   width: 100%;
