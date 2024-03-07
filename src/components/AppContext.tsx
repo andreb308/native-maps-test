@@ -20,7 +20,7 @@ type Cities = {
 }[];
 
 interface AppContextInterface {
-  data: CakeInfo | null;
+  data: CakeInfo;
   setData: Dispatch<SetStateAction<CakeInfo>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;

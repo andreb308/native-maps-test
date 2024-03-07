@@ -1,26 +1,28 @@
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Animated, Dimensions, Platform, Text } from "react-native";
+import { Animated, Dimensions, Platform, Text, View } from "react-native";
 
 import { useAppContext } from "../../AppContext";
 
 const { width, height } = Dimensions.get("window");
 
-const CARD_HEIGHT = 220;
-const CARD_WIDTH = width * 0.8;
+const CARD_HEIGHT = 100;
+const CARD_WIDTH = width * 0.85;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 let mapAnimation = new Animated.Value(0);
 
 export default function BottomScroller() {
-  const { data, handleFetch, mapRef } = useAppContext()
+  const { data, handleFetch, mapRef } = useAppContext();
 
-    type Coords = {
-      latitude: number,
-      longitude: number
-    }
+  type Coords = {
+    latitude: number;
+    longitude: number;
+  };
   const handleMapMove = (obj: Coords) => {
-    mapRef.current?.animateToRegion({...obj, latitudeDelta: 0.002, longitudeDelta: 0.002}, 3000)
-
-  }
+    mapRef.current?.animateToRegion(
+      { ...obj, latitudeDelta: 0.002, longitudeDelta: 0.002 },
+      3000
+    );
+  };
   return (
     <Scroller
       contentInset={{
@@ -45,19 +47,26 @@ export default function BottomScroller() {
         ],
         { useNativeDriver: true }
       )}
-      
     >
       {data &&
         data.map((cake) => (
-          <BottomCard key={cake.storeID} onPress={() => handleMapMove({latitude: cake.latitude, longitude: cake.longitude})}>
-            <Icon name='cake' size={50} color='#5f5f5f' style={{textAlign: 'center'}}></Icon>
-
-            <Text style={{ fontSize: 28, fontWeight: 'bold', textAlign: 'center' }}>{cake.storeName}</Text>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>{cake.city}</Text>
-            
-            <Text style={{ fontSize: 14, textAlign: 'center', marginTop: 8 }}>Sabor: {cake.flavorName}</Text>
-            <Text style={{ fontSize: 12, textAlign: 'justify'}}>{cake.description}</Text>
-            <Text style={{ position: 'absolute', bottom: 5, right: '5%', fontWeight: '800', fontSize: 20, textAlign: 'center', color: cake.price > 10 ? 'red' : 'green' }}>R${cake.price.toFixed(2)}</Text>
+          <BottomCard
+            key={cake.storeID}
+            onPress={() =>
+              handleMapMove({
+                latitude: cake.latitude,
+                longitude: cake.longitude,
+              })
+            }
+          >
+            <FlexColumn>
+              <StoreName>{cake.storeName}</StoreName>
+              <StoreDesc numberOfLines={2}>{cake.description}</StoreDesc>
+            </FlexColumn>
+            <Text></Text>
+            <PriceContainer>
+              <Price>R${cake.price.toFixed(2)}</Price>
+            </PriceContainer>
           </BottomCard>
         ))}
     </Scroller>
@@ -65,9 +74,9 @@ export default function BottomScroller() {
 }
 
 /********************************************************/
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
-export const Scroller = styled(Animated.ScrollView).attrs({
+const Scroller = styled(Animated.ScrollView).attrs({
   horizontal: true,
   scrollEventThrottle: 1,
   showsHorizontalScrollIndicator: false,
@@ -81,19 +90,57 @@ export const Scroller = styled(Animated.ScrollView).attrs({
   padding: 10px 0;
 `;
 
-export const BottomCard = styled.TouchableOpacity.attrs({
+const BottomCard = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
 })`
-  /* align-items: center;
-  justify-content: center; */
-  background-color: #fafafa;
-  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background-color: #e4ffdb;
+  border-radius: 25px;
   /* border-top-right-radius: 50px; */
-  margin: 0 10px; /* Margin shorthand for horizontal margin */
+  margin: 0 10px;
   box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.3); /* Standard CSS box-shadow */
   border: 1px solid #ddd;
   height: ${CARD_HEIGHT}px;
   width: ${CARD_WIDTH}px;
-  padding: 10px 30px;
+  padding: 10px 20px;
   overflow: hidden;
+`;
+
+const FlexColumn = styled.View`
+  width: 60%;
+  height: 90%;
+  flex-direction: column;
+  position: relative;
+  /* background-color: pink; */
+`;
+
+const StoreName = styled.Text`
+  height: 50%;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  /* text-wrap: ; */
+`;
+
+const StoreDesc = styled.Text`
+  height: 50%;
+  text-align: center;
+  font-size: 12px;
+`;
+
+const PriceContainer = styled.View`
+padding: 0 10px;
+  width: 40%;
+  height: 90%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
+const Price = styled.Text`
+  font-size: 24px;
+  font-weight: bold;
+  color: #259e3f;
 `;
