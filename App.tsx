@@ -1,4 +1,5 @@
-import MapScreen from "./src/components/Map/Index";
+import "react-native-gesture-handler"; // make sure it's at the top and there's nothing else before it
+import MapStack from "./src/components/Map/Index";
 import IndexScreen from "./src/components/TextScreen/Index";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
@@ -41,15 +42,15 @@ export default function App() {
               // Other styling properties can be added here
             }
           }
-          initialRouteName='Map'
+          initialRouteName="Map"
           shifting
           activeColor={"red"}
           inactiveColor={"black"}
           keyboardHidesNavigationBar
         >
           <Tab.Screen
-            name='Map'
-            component={MapScreen}
+            name="Map"
+            component={MapStack}
             options={{
               tabBarLabel: "MapView",
               tabBarIcon: ({ focused, color }) => (
@@ -62,12 +63,12 @@ export default function App() {
             }}
           ></Tab.Screen>
           <Tab.Screen
-            name='Index'
+            name="Index"
             component={IndexScreen}
             options={{
               tabBarLabel: "TypeTest",
               tabBarIcon: ({ color }) => (
-                <Icon name='location-history' color={color} size={26} />
+                <Icon name="location-history" color={color} size={26} />
               ),
             }}
           ></Tab.Screen>

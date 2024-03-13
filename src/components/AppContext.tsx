@@ -6,7 +6,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { CakeInfo, GeocodeInfo } from "./Map/Types";
+import { CakesInfo, GeocodeInfo } from "./Map/Types";
 import MapView from "react-native-maps";
 import { hardcodedCities } from "../../hardcodedCities";
 
@@ -20,8 +20,8 @@ type Cities = {
 }[];
 
 interface AppContextInterface {
-  data: CakeInfo;
-  setData: Dispatch<SetStateAction<CakeInfo>>;
+  data: CakesInfo;
+  setData: Dispatch<SetStateAction<CakesInfo>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
   cityList: Cities;
@@ -34,7 +34,7 @@ interface AppContextInterface {
 const AppContext = createContext<AppContextInterface | null>(null);
 
 export const AppContextProvider: React.FC<any> = ({ children }) => {
-  const [data, setData] = useState<CakeInfo>([
+  const [data, setData] = useState<CakesInfo>([
     {
       storeID: 0,
       storeName: "Store Name",
@@ -54,7 +54,7 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
 
   // The handleFetch function
   const handleFetch = async () => {
-    const textResponse: CakeInfo = await fetch(
+    const textResponse: CakesInfo = await fetch(
       "https://lace-fifth-dragonfly.glitch.me/"
     ).then((res) => res.json());
     setData(textResponse);

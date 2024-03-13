@@ -1,10 +1,10 @@
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Animated, Dimensions, Platform, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { useAppContext } from "../../AppContext";
 
 const { width, height } = Dimensions.get("window");
-
 const CARD_HEIGHT = 100;
 const CARD_WIDTH = width * 0.85;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
@@ -12,6 +12,8 @@ let mapAnimation = new Animated.Value(0);
 
 export default function BottomScroller() {
   const { data, handleFetch, mapRef } = useAppContext();
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "MapView">>();
 
   type Coords = {
     latitude: number;
@@ -58,6 +60,9 @@ export default function BottomScroller() {
                 longitude: cake.longitude,
               })
             }
+            onLongPress={() => {
+              navigation.navigate("CakeDetails", { props: cake });
+            }}
           >
             <FlexColumn>
               <StoreName>{cake.storeName}</StoreName>
@@ -75,6 +80,8 @@ export default function BottomScroller() {
 
 /********************************************************/
 import styled from "styled-components/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../Index";
 
 const Scroller = styled(Animated.ScrollView).attrs({
   horizontal: true,
@@ -117,6 +124,8 @@ const FlexColumn = styled.View`
 `;
 
 const StoreName = styled.Text`
+  /* Inter font */
+  /* font-family: "Inter", sans-serif; */
   height: 50%;
   font-size: 26px;
   font-weight: 700;
@@ -131,7 +140,7 @@ const StoreDesc = styled.Text`
 `;
 
 const PriceContainer = styled.View`
-padding: 0 10px;
+  padding: 0 10px;
   width: 40%;
   height: 90%;
   align-items: center;
