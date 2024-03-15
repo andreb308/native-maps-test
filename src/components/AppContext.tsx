@@ -6,7 +6,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { CakesInfo, GeocodeInfo } from "./Map/Types";
+import { CakesInfo } from "./Map/Types";
 import MapView from "react-native-maps";
 import { hardcodedCities } from "../../hardcodedCities";
 

@@ -1,4 +1,3 @@
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { Animated, Dimensions, Platform, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -81,7 +80,7 @@ export default function BottomScroller() {
 /********************************************************/
 import styled from "styled-components/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../Index";
+import { RootStackParamList } from "../../../../routes/stack.routes";
 
 const Scroller = styled(Animated.ScrollView).attrs({
   horizontal: true,

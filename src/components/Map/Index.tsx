@@ -9,32 +9,7 @@ import BottomScroller from "./Templates/BottomScroller";
 import LoadingView from "./Templates/LoadingView";
 import CityInput from "./Templates/CityInput";
 
-import { createStackNavigator } from "@react-navigation/stack";
-import CakeDetails from "../CakeDetails/Index";
-import { CakeProps } from "./Types";
-
-export type RootStackParamList = {
-  MapView: undefined;
-  CakeDetails: { props: CakeProps };
-  // Add other screens here
-};
-
-const Stack = createStackNavigator<RootStackParamList>();
-
-export default function MapStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="MapView" component={Map} />
-      <Stack.Screen
-        name="CakeDetails"
-        component={CakeDetails as React.ComponentType<{}>}
-      />
-    </Stack.Navigator>
-  );
-}
-
-
-function Map() {
+export default function Map() {
   const { data, handleFetch, mapRef, cityList, loading } = useAppContext();
 
   const getLocationAsync = async () => {
@@ -77,7 +52,6 @@ function Map() {
     </>
   );
 }
-
 
 {
   /* <ButtonContainer>

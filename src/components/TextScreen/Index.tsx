@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import React, { useContext, useState } from "react";
+import React from "react";
 import { Container, Title, Input } from "./Style";
 
 import type { MaterialBottomTabScreenProps } from "@react-navigation/material-bottom-tabs";

@@ -1,7 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { CakeProps } from "../Map/Types";
-import { RootStackParamList } from "../Map/Index";
+import { RootStackParamList } from "../../../routes/stack.routes";
 import { RouteProp } from "@react-navigation/native";
 
 type RouteProps = {
@@ -29,7 +28,7 @@ export default function CakeDetails({ route }: RouteProps) {
         gap: 100,
       }}
     >
-      <Text style={{ fontSize: 72, textAlign: "center" }}>{storeName}</Text>
+      <Text style={{ fontSize: 64, textAlign: "center" }}>{storeName}</Text>
       <Text style={{ fontSize: 24, textAlign: "center" }}>{city}</Text>
       <Text style={{ textAlign: "center" }}>{description}</Text>
       <Text style={{ textAlign: "center" }}>{price}</Text>
