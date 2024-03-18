@@ -1,5 +1,5 @@
 import MapStack from "./stack.routes";
-import IndexScreen from "../src/components/TextScreen/Index";
+import IndexScreen from "../src/screens/TextScreen/Index";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
 

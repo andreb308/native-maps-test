@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import CakeDetails from "../src/components/CakeDetails/Index";
-import { CakeProps } from "../src/components/Map/Types";
-import Map from "../src/components/Map/Index";
+import CakeDetails from "../src/screens/CakeDetails/Index";
+import { CakeProps } from "../src/screens/Map/Types";
+import Map from "../src/screens/Map/Index";
 
 export type RootStackParamList = {
   MapView: undefined;
