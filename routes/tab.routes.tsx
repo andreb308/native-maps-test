@@ -29,6 +29,7 @@ export default function TabRoutes() {
     <Tab.Navigator
       barStyle={
         {
+          // bottom: 300,
           // height: 30,
           // display: "flex",
           // alignItems: "center",

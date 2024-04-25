@@ -39,7 +39,6 @@ export const Container = styled.View.attrs(pointerEventsAttrs)`
   justify-content: flex-start;
 `;
 
-// @ts-ignore
 export const StyledMap = styled(MapView).attrs(MapViewAttrs)`
   width: 100%;
   height: 100%;
