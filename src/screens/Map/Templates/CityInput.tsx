@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAppContext } from "../../AppContext";
 import { GeocodeInfo } from "../Types";
+import { Keyboard, TextInput } from "react-native";
 
 const ANIMATION_DURATION = 1000;
 
 function CitySearch() {
   const [locationSearch, setLocationSearch] = useState("");
   const { cityList, setCityList, setLoading, mapRef } = useAppContext();
+  const inputRef = useRef<TextInput>(null);
+
+  const closeKeyboard = () => {
+    inputRef.current?.blur();
+  };
 
   const handleLocationSearch = async () => {
     try {

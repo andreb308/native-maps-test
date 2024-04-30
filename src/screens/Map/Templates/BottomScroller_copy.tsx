@@ -1,5 +1,8 @@
 import { Animated, Dimensions, Platform, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Carousel from "react-native-reanimated-carousel";
+
+import { normalize } from "../../../../util/normalize.js";
 
 import { useAppContext } from "../../AppContext";
 
@@ -21,59 +24,44 @@ export default function BottomScroller() {
   const handleMapMove = (obj: Coords) => {
     mapRef.current?.animateToRegion(
       { ...obj, latitudeDelta: 0.002, longitudeDelta: 0.002 },
-      3000
+      2000
     );
   };
   return (
-    <Scroller
-      contentInset={{
-        top: 0,
-        left: SPACING_FOR_CARD_INSET,
-        bottom: 0,
-        right: SPACING_FOR_CARD_INSET,
-      }}
-      contentContainerStyle={{
-        paddingHorizontal:
-          Platform.OS === "android" ? SPACING_FOR_CARD_INSET : 0,
-      }}
-      onScroll={Animated.event(
-        [
-          {
-            nativeEvent: {
-              contentOffset: {
-                x: mapAnimation,
-              },
-            },
-          },
-        ],
-        { useNativeDriver: true }
-      )}
-    >
-      {data &&
-        data.map((cake) => (
+    <>
+      <Carousel
+        loop
+        width={width}
+        height={130}
+        autoPlay={true}
+        autoPlayInterval={5000}
+        scrollAnimationDuration={1000}
+        data={data}
+        onSnapToItem={(index) =>
+          handleMapMove({
+            latitude: data[index]!.latitude,
+            longitude: data[index]!.longitude,
+          })
+        }
+        renderItem={({ item, index }) => (
           <BottomCard
-            key={cake.storeID}
-            onPress={() =>
-              handleMapMove({
-                latitude: cake.latitude,
-                longitude: cake.longitude,
-              })
-            }
-            onLongPress={() => {
-              navigation.navigate("CakeDetails", { props: cake });
+            key={item.storeID}
+            onPress={() => {
+              navigation.navigate("CakeDetails", { props: item });
             }}
           >
             <FlexColumn>
-              <StoreName>{cake.storeName}</StoreName>
-              <StoreDesc numberOfLines={2}>{cake.description}</StoreDesc>
+              <StoreName>{item.storeName}</StoreName>
+              <StoreDesc numberOfLines={2}>{item.description}</StoreDesc>
             </FlexColumn>
             <Text></Text>
             <PriceContainer>
-              <Price>R${cake.price.toFixed(2)}</Price>
+              <Price>R${item.price.toFixed(2)}</Price>
             </PriceContainer>
           </BottomCard>
-        ))}
-    </Scroller>
+        )}
+      />
+    </>
   );
 }
 
@@ -111,6 +99,7 @@ const BottomCard = styled.TouchableOpacity.attrs({
   height: ${CARD_HEIGHT}px;
   width: ${CARD_WIDTH}px;
   padding: 10px 20px;
+  margin-left: ${SPACING_FOR_CARD_INSET}px;
   overflow: hidden;
 `;
 
@@ -126,6 +115,7 @@ const StoreName = styled.Text`
   /* Inter font */
   /* font-family: "Inter", sans-serif; */
   height: 50%;
+  /* font-size: ${0.05 * width}px; */
   font-size: 26px;
   font-weight: 700;
   text-align: center;
@@ -139,7 +129,7 @@ const StoreDesc = styled.Text`
 `;
 
 const PriceContainer = styled.View`
-  padding: 0 10px;
+  /* padding: 0 10px; */
   width: 40%;
   height: 90%;
   align-items: center;

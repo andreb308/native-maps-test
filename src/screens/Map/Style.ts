@@ -29,14 +29,11 @@ const MapViewAttrs: Object = {
 export const Container = styled.View.attrs(pointerEventsAttrs)`
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  /* position: abs */
+  flex: 1;
   /* z-index: 1; */
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
 export const StyledMap = styled(MapView).attrs(MapViewAttrs)`

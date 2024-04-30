@@ -5,9 +5,11 @@ import * as Location from "expo-location";
 import { Container, StyledMap } from "./Style";
 import { useAppContext } from "../AppContext";
 
-import BottomScroller from "./Templates/BottomScroller";
+import BottomScroller from "./Templates/BottomScroller_copy";
+// import BottomScroller from "./Templates/BottomScroller";
 import LoadingView from "./Templates/LoadingView";
 import CityInput from "./Templates/CityInput";
+import { Keyboard } from "react-native";
 
 export default function Map() {
   const { data, handleFetch, mapRef, cityList, loading } = useAppContext();
@@ -32,7 +34,7 @@ export default function Map() {
     <>
       {loading && <LoadingView />}
 
-      <StyledMap ref={mapRef}>
+      <StyledMap ref={mapRef} onPress={() => Keyboard.dismiss()}>
         {cityList.map((city) => (
           <Marker key={city.id} coordinate={city.coordinates}></Marker>
         ))}
@@ -46,8 +48,8 @@ export default function Map() {
       </StyledMap>
 
       <Container>
-        <BottomScroller />
         <CityInput />
+        <BottomScroller />
       </Container>
     </>
   );
