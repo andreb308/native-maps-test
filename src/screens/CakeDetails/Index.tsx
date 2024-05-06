@@ -1,8 +1,7 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { RootStackParamList } from "../../../routes/stack.routes";
 import { RouteProp } from "@react-navigation/native";
-import MapView, { Marker } from "react-native-maps";
+import StaticMap from "./Templates/StaticMap";
 
 type RouteProps = {
   route: RouteProp<RootStackParamList, "CakeDetails">;
@@ -19,62 +18,71 @@ export default function CakeDetails({ route }: RouteProps) {
     price,
     rating,
     storeName,
+    priceType,
+    avgWeight,
   } = route.params.props;
   return (
-    <View
-      style={{
-        alignItems: "center",
-        paddingTop: 20,
-        flex: 1,
-        gap: 10,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 45,
-          textAlign: "center",
-          marginTop: "10%",
-          fontWeight: "bold",
-        }}
-      >
-        {storeName}
-      </Text>
-      <Text style={{ fontSize: 24, textAlign: "center" }}>{city}</Text>
+    <Container>
+      <View>
+        <StoreName>{storeName}</StoreName>
+        <CityName>{city}</CityName>
+      </View>
+
+      <StaticMap
+        latitude={latitude}
+        longitude={longitude}
+        storeName={storeName}
+      />
+
+      <PriceConverter
+        price={price}
+        priceType={priceType}
+        avgWeight={avgWeight}
+      />
+
       <View
         style={{
+          // marginTop: 20,
           width: "90%",
-          height: "30%",
-          marginTop: 50,
+          height: "20%",
+          backgroundColor: "#D9D9D9",
           borderRadius: 25,
-          overflow: "hidden",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "row",
+          gap: 15,
         }}
-      >
-        {/* <MapEmbed
-          source={{
-            html: `<iframe width='100%' height='100%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?q=${`${latitude},${longitude}`}&hl=es&z=14&amp;output=embed'></iframe>`,
-          }}
-        /> */}
+      ></View>
 
-        <MapView
-          initialRegion={{
-            latitude,
-            longitude,
-            latitudeDelta: 0.0008,
-            longitudeDelta: 0.0008,
-          }}
-          style={{ width: "100%", height: "100%" }}
-          zoomEnabled={false}
-          scrollEnabled={false}
-        >
-          <Marker
-            coordinate={{ latitude, longitude }}
-            title={storeName}
-          ></Marker>
-        </MapView>
-      </View>
-      <Text style={{ textAlign: "center" }}>{description}</Text>
-      {/* <Text style={{ textAlign: "center" }}>{latitude}</Text>
-      <Text style={{ textAlign: "center" }}>{longitude}</Text> */}
-    </View>
+      {/* <CakeDescription style={{ textAlign: "center" }}>
+        {description}
+      </CakeDescription> */}
+    </Container>
   );
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+import styled from "styled-components/native";
+import { Text, View } from "react-native";
+import PriceConverter from "./Templates/PriceConverter";
+
+const Container = styled.View`
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 20px;
+  flex: 1;
+`;
+
+const StoreName = styled.Text`
+  font-size: 45px;
+  text-align: center;
+  margin-top: 10%;
+  font-weight: bold;
+`;
+
+const CityName = styled.Text`
+  font-size: 24px;
+  text-align: center;
+`;
+
+const CakeDescription = styled.Text``;

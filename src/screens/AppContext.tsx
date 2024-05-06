@@ -36,15 +36,18 @@ const AppContext = createContext<AppContextInterface | null>(null);
 export const AppContextProvider: React.FC<any> = ({ children }) => {
   const [data, setData] = useState<CakesInfo>([
     {
-      storeID: 0,
-      storeName: "Store Name",
-      latitude: 0,
-      longitude: 0,
-      city: "City Name",
-      description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      storeID: 1,
+      storeName: "Carregando...",
+      latitude: -22.2827158,
+      longitude: -42.5314,
+      city: "Nova Friburgo",
+      description:
+        "Buscando informações sobre a loja. Por favor, aguarde um momento.",
       price: 13.13,
-      flavorName: "Flavor",
-      rating: 5,
+      flavorName: "Múltiplos",
+      rating: 4.9,
+      priceType: "/un",
+      avgWeight: 0.35,
     },
   ]);
   const [cityList, setCityList] = useState<Cities>(hardcodedCities);

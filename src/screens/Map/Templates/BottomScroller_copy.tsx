@@ -56,7 +56,10 @@ export default function BottomScroller() {
             </FlexColumn>
             <Text></Text>
             <PriceContainer>
-              <Price>R${item.price.toFixed(2)}</Price>
+              <Price>
+                R${item.price.toFixed(2)}
+                <PriceType> {item.priceType}</PriceType>
+              </Price>
             </PriceContainer>
           </BottomCard>
         )}
@@ -138,7 +141,17 @@ const PriceContainer = styled.View`
 `;
 
 const Price = styled.Text`
+  /* width: 100%; */
+  text-align: center;
   font-size: 24px;
+  font-weight: bold;
+  color: #259e3f;
+`;
+
+const PriceType = styled.Text`
+  font-size: 12px;
+  /* width: 100%; */
+  /* text-align: right; */
   font-weight: bold;
   color: #259e3f;
 `;

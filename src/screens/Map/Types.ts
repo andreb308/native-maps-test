@@ -23,6 +23,8 @@ export type CakeProps = {
   price: number;
   flavorName: string;
   rating: number;
+  priceType: "/un" | "/kg" | "/fatia";
+  avgWeight: number;
 };
 
 export type CakesInfo = Array<CakeProps>;
