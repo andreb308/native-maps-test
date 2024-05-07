@@ -2,6 +2,8 @@ import React from "react";
 import { RootStackParamList } from "../../../routes/stack.routes";
 import { RouteProp } from "@react-navigation/native";
 import StaticMap from "./Templates/StaticMap";
+import { Text, View } from "react-native";
+import PriceConverter from "./Templates/PriceConverter";
 
 type RouteProps = {
   route: RouteProp<RootStackParamList, "CakeDetails">;
@@ -40,19 +42,10 @@ export default function CakeDetails({ route }: RouteProps) {
         avgWeight={avgWeight}
       />
 
-      <View
-        style={{
-          // marginTop: 20,
-          width: "90%",
-          height: "20%",
-          backgroundColor: "#D9D9D9",
-          borderRadius: 25,
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "row",
-          gap: 15,
-        }}
-      ></View>
+      <CContainer>
+        <CakeDescription description={description} />
+        <CakeFlavors></CakeFlavors>
+      </CContainer>
 
       {/* <CakeDescription style={{ textAlign: "center" }}>
         {description}
@@ -63,17 +56,20 @@ export default function CakeDetails({ route }: RouteProps) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 import styled from "styled-components/native";
-import { Text, View } from "react-native";
-import PriceConverter from "./Templates/PriceConverter";
+import CakeDescription from "./Templates/CakeDescription";
+import CakeFlavors from "./Templates/CakeFlavors";
+import colors from "../../../theme/colors";
 
 const Container = styled.View`
   align-items: center;
   justify-content: space-around;
   padding-top: 20px;
   flex: 1;
+  background-color: #fffbda;
 `;
 
 const StoreName = styled.Text`
+  color: ${colors.text};
   font-size: 45px;
   text-align: center;
   margin-top: 10%;
@@ -81,8 +77,19 @@ const StoreName = styled.Text`
 `;
 
 const CityName = styled.Text`
+  color: ${colors.text};
   font-size: 24px;
   text-align: center;
 `;
 
-const CakeDescription = styled.Text``;
+const CContainer = styled.View`
+  width: 90%;
+  height: 20%;
+  /* background-color: #d9d9d9; */
+  border-radius: 25px;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  /* padding: 10px; */
+  /* position: row; */
+`;

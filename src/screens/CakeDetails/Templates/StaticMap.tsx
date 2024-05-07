@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 type StaticMapProps = {
@@ -38,7 +39,7 @@ const MapContainer = styled.View`
   overflow: hidden;
   // Figma drop shadow
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  elevation: 5;
+  ${Platform.OS === "android" && "elevation: 5;"}
 `;
 const StaticMap = styled(MapView).attrs({
   zoomEnabled: false,

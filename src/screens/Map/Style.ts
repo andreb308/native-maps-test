@@ -1,17 +1,17 @@
 import styled from "styled-components/native";
-import MapView from "react-native-maps";
+import MapView, { MapViewProps } from "react-native-maps";
 import Constants from "expo-constants";
 
 export const pointerEventsAttrs: Object = {
   pointerEvents: "box-none",
 };
 
-const MapViewAttrs: Object = {
+const MapViewAttrs: MapViewProps = {
   initialRegion: {
     latitude: -22.2827158,
     longitude: -42.5314,
-    latitudeDelta: 0.002,
-    longitudeDelta: 0.002,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
   },
   mapType: "standard",
   provider: "google",

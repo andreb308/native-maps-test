@@ -1,4 +1,4 @@
-import { View, Text, Dimensions } from "react-native";
+import { View, Text, Dimensions, Platform } from "react-native";
 import React from "react";
 
 const deviceWidth = Dimensions.get("window").width;
@@ -37,34 +37,23 @@ export default function PriceConverter({
         {`R$${
           priceType === "/kg" ? price.toFixed(2) : pricePerKg.toFixed(2)
         }\n`}
-        <PriceDesc> por quilo</PriceDesc>
+        <PriceDesc>por quilo</PriceDesc>
       </Price>
 
-      <View
-        style={{
-          height: "70%",
-          width: 1,
-          backgroundColor: "#909090",
-        }}
-      ></View>
+      <Divider />
 
       <Price>
         {`R$${pricePer350g.toFixed(2)}\n`}
-        <PriceDesc> por 350g</PriceDesc>
+        <PriceDesc>por 350g</PriceDesc>
       </Price>
-      <View
-        style={{
-          height: "70%",
-          width: 1,
-          backgroundColor: "#909090",
-        }}
-      ></View>
+
+      <Divider />
 
       <Price>
         {`R$${
           priceType === "/fatia" ? price.toFixed(2) : pricePerSlice.toFixed(2)
         }\n`}
-        <PriceDesc> por fatia</PriceDesc>
+        <PriceDesc>por fatia</PriceDesc>
       </Price>
     </Container>
   );
@@ -72,30 +61,38 @@ export default function PriceConverter({
 
 import styled from "styled-components/native";
 import { normalize } from "../../../../util/normalize";
+import colors from "../../../../theme/colors";
 
 const Container = styled.View`
   width: 90%;
   /* max-width: 800px; */
-  height: 15%;
-  background-color: #d9d9d9;
+  height: 12.5%;
+  background-color: #ffec9e;
   border-radius: 25px;
   align-items: center;
   justify-content: space-around;
   padding: 0 20px;
   flex-direction: row;
   gap: 15px;
-  //
+  // Not joking when I say that removing this comment breaks the entire page.
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  elevation: 5;
+  ${Platform.OS === "android" && "elevation: 5;"}
 `;
 
 const Price = styled.Text`
   text-align: center;
   font-size: ${normalize(deviceWidth < 600 ? 24 : 20)}px;
   font-weight: bold;
-  color: #259e3f;
+  color: ${colors.text};
 `;
 
 const PriceDesc = styled(Price)`
   font-size: ${normalize(deviceWidth < 600 ? 16 : 12)}px;
+`;
+
+const Divider = styled.View`
+  height: 70%;
+  width: 2.5px;
+  border-radius: 50px;
+  background-color: #909090;
 `;

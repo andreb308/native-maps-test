@@ -2,6 +2,7 @@ import MapStack from "./stack.routes";
 import IndexScreen from "../src/screens/TextScreen/Index";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import colors from "../theme/colors";
 
 // const bottomTabOptions = {
 //   tabBarShowLabel: false,
@@ -27,29 +28,28 @@ const Tab = createMaterialBottomTabNavigator<RootTabParamList>();
 export default function TabRoutes() {
   return (
     <Tab.Navigator
-      barStyle={
-        {
-          // bottom: 300,
-          // height: 30,
-          // display: "flex",
-          // alignItems: "center",
-          // justifyContent: "center",
-          // margin: 0,
-          // padding: 0, // Set your desired height here
-          // Other styling properties can be added here
-        }
-      }
+      barStyle={{
+        backgroundColor: "white",
+        // bottom: 300,
+        // height: 30,
+        // display: "flex",
+        // alignItems: "center",
+        // justifyContent: "center",
+        // margin: 0,
+        // padding: 0, // Set your desired height here
+        // Other styling properties can be added here
+      }}
       initialRouteName="Map"
       shifting
-      activeColor={"red"}
-      inactiveColor={"black"}
+      activeColor={"orange"}
+      inactiveColor={colors.text}
       keyboardHidesNavigationBar
     >
       <Tab.Screen
         name="Map"
         component={MapStack}
         options={{
-          tabBarLabel: "MapView",
+          tabBarLabel: "Bolos",
           tabBarIcon: ({ focused, color }) => (
             <Icon
               name={focused ? "location-on" : "location-off"}
@@ -63,9 +63,13 @@ export default function TabRoutes() {
         name="Index"
         component={IndexScreen}
         options={{
-          tabBarLabel: "TypeTest",
-          tabBarIcon: ({ color }) => (
-            <Icon name="location-history" color={color} size={26} />
+          tabBarLabel: "Letra",
+          tabBarIcon: ({ focused, color }) => (
+            <Icon
+              name={focused ? "music-note" : "music-off"}
+              color={color}
+              size={26}
+            />
           ),
         }}
       ></Tab.Screen>

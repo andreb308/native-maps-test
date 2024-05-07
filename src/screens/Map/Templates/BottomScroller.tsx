@@ -2,7 +2,7 @@ import { Animated, Dimensions, Platform, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Carousel from "react-native-reanimated-carousel";
 
-import { normalize } from "../../../../util/normalize.js";
+// import { normalize } from "../../../../util/normalize.js";
 
 import { useAppContext } from "../../AppContext";
 
@@ -10,7 +10,7 @@ const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = 100;
 const CARD_WIDTH = width * 0.85;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
-let mapAnimation = new Animated.Value(0);
+// let mapAnimation = new Animated.Value(0);
 
 export default function BottomScroller() {
   const { data, handleFetch, mapRef } = useAppContext();
@@ -71,7 +71,8 @@ export default function BottomScroller() {
 /********************************************************/
 import styled from "styled-components/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../routes/stack.routes";
+import { RootStackParamList } from "../../../../routes/stack.routes.js";
+import colors from "../../../../theme/colors";
 
 const Scroller = styled(Animated.ScrollView).attrs({
   horizontal: true,
@@ -93,7 +94,7 @@ const BottomCard = styled.TouchableOpacity.attrs({
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  background-color: #e4ffdb;
+  background-color: #fffbda;
   border-radius: 25px;
   /* border-top-right-radius: 50px; */
   margin: 0 10px;
@@ -145,7 +146,7 @@ const Price = styled.Text`
   text-align: center;
   font-size: 24px;
   font-weight: bold;
-  color: #259e3f;
+  color: ${colors.text};
 `;
 
 const PriceType = styled.Text`
@@ -153,5 +154,5 @@ const PriceType = styled.Text`
   /* width: 100%; */
   /* text-align: right; */
   font-weight: bold;
-  color: #259e3f;
+  color: ${colors.text};
 `;
