@@ -29,41 +29,43 @@ export default function BottomScroller() {
   };
   return (
     <>
-      <Carousel
-        loop
-        width={width}
-        height={130}
-        autoPlay={true}
-        autoPlayInterval={5000}
-        scrollAnimationDuration={1000}
-        data={data}
-        onSnapToItem={(index) =>
-          handleMapMove({
-            latitude: data[index]!.latitude,
-            longitude: data[index]!.longitude,
-          })
-        }
-        renderItem={({ item, index }) => (
-          <BottomCard
-            key={item.storeID}
-            onPress={() => {
-              navigation.navigate("CakeDetails", { props: item });
-            }}
-          >
-            <FlexColumn>
-              <StoreName>{item.storeName}</StoreName>
-              <StoreDesc numberOfLines={2}>{item.description}</StoreDesc>
-            </FlexColumn>
-            <Text></Text>
-            <PriceContainer>
-              <Price>
-                R${item.price.toFixed(2)}
-                <PriceType> {item.priceType}</PriceType>
-              </Price>
-            </PriceContainer>
-          </BottomCard>
-        )}
-      />
+      <View style={{ width: "100%", height: CARD_HEIGHT, marginBottom: 30 }}>
+        <Carousel
+          loop
+          width={width}
+          height={1.3 * CARD_HEIGHT}
+          autoPlay={true}
+          autoPlayInterval={5000}
+          scrollAnimationDuration={1000}
+          data={data}
+          onSnapToItem={(index) =>
+            handleMapMove({
+              latitude: data[index]!.latitude,
+              longitude: data[index]!.longitude,
+            })
+          }
+          renderItem={({ item, index }) => (
+            <BottomCard
+              key={item.storeID}
+              onPress={() => {
+                navigation.navigate("CakeDetails", { props: item });
+              }}
+            >
+              <FlexColumn>
+                <StoreName>{item.storeName}</StoreName>
+                <StoreDesc numberOfLines={2}>{item.description}</StoreDesc>
+              </FlexColumn>
+              <Text></Text>
+              <PriceContainer>
+                <Price>
+                  R${item.price.toFixed(2)}
+                  <PriceType> {item.priceType}</PriceType>
+                </Price>
+              </PriceContainer>
+            </BottomCard>
+          )}
+        />
+      </View>
     </>
   );
 }

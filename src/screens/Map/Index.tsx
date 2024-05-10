@@ -22,7 +22,6 @@ export default function Map() {
     }
     let location = await Location.getCurrentPositionAsync({});
     console.log("Current location:", location);
-    // Handle the obtained location data as needed
   };
 
   useEffect(() => {
@@ -54,31 +53,3 @@ export default function Map() {
     </>
   );
 }
-
-{
-  /* <ButtonContainer>
-  {cityList.map((city) => (
-    <StyledButton
-    key={city.id}
-    onPress={() => {
-      moveToCity(city);
-    }}
-    >
-    <ButtonText key={city.id}>{city.name}</ButtonText>
-    </StyledButton>
-    ))}
-  </ButtonContainer> */
-}
-// const moveToCity = (city) => {
-//   const { latitude, longitude } = city.coordinates;
-//   const region = {
-//     latitude,
-//     longitude,
-//     latitudeDelta: 0.0922,
-//     longitudeDelta: 0.0421,
-//   };
-//   // setInitialRegion(region);
-//   setLoading(true);
-//   mapRef.current?.animateToRegion(region, 2000);
-//   setTimeout(() => setLoading(false), 2000);
-// };
