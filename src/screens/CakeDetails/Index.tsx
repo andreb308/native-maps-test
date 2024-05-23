@@ -2,8 +2,9 @@ import React from "react";
 import { RootStackParamList } from "../../../routes/stack.routes";
 import { RouteProp } from "@react-navigation/native";
 import StaticMap from "./Templates/StaticMap";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import PriceConverter from "./Templates/PriceConverter";
+import Ratings from "./Templates/Ratings";
 
 type RouteProps = {
   route: RouteProp<RootStackParamList, "CakeDetails">;
@@ -41,11 +42,12 @@ export default function CakeDetails({ route }: RouteProps) {
         priceType={priceType}
         avgWeight={avgWeight}
       />
+      <Ratings price={price} priceType={priceType} avgWeight={avgWeight} />
 
-      <CContainer>
-        <CakeDescription description={description} />
-        <CakeFlavors></CakeFlavors>
-      </CContainer>
+      {/* <CContainer> */}
+      <CakeDescription description={description} />
+      {/* <CakeFlavors></CakeFlavors>
+      </CContainer> */}
 
       {/* <CakeDescription style={{ textAlign: "center" }}>
         {description}
@@ -57,12 +59,12 @@ export default function CakeDetails({ route }: RouteProps) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 import styled from "styled-components/native";
 import CakeDescription from "./Templates/CakeDescription";
-import CakeFlavors from "./Templates/CakeFlavors";
 import colors from "../../../theme/colors";
 
 const Container = styled.View`
+  padding: 20px;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-top: 20px;
   flex: 1;
   background-color: #fffbda;

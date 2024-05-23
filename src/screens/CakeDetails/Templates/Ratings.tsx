@@ -33,28 +33,29 @@ export default function PriceConverter({
 
   return (
     <Container>
-      <Price>
-        {`R$${
-          priceType === "/kg" ? price.toFixed(2) : pricePerKg.toFixed(2)
-        }\n`}
-        <PriceDesc>por quilo</PriceDesc>
-      </Price>
+      <Column>
+        <Category>Tamanho</Category>
+        <Rating>
+          8<RatingDesc>/10</RatingDesc>
+        </Rating>
+      </Column>
+      {/* <Divider /> */}
 
-      <Divider />
+      <Column>
+        <Category>Variedade</Category>
+        <Rating>
+          9<RatingDesc>/10</RatingDesc>
+        </Rating>
+      </Column>
 
-      <Price>
-        {`R$${pricePer350g.toFixed(2)}\n`}
-        <PriceDesc>por 350g</PriceDesc>
-      </Price>
+      {/* <Divider /> */}
 
-      <Divider />
-
-      <Price>
-        {`R$${
-          priceType === "/fatia" ? price.toFixed(2) : pricePerSlice.toFixed(2)
-        }\n`}
-        <PriceDesc>por fatia</PriceDesc>
-      </Price>
+      <Column>
+        <Category>Custo</Category>
+        <Rating>
+          10<RatingDesc>/10</RatingDesc>
+        </Rating>
+      </Column>
     </Container>
   );
 }
@@ -66,28 +67,29 @@ import colors from "../../../../theme/colors";
 const Container = styled.View`
   width: 100%;
   /* max-width: 800px; */
-  height: 12.5%;
-  background-color: #ffec9e;
-  border-radius: 25px;
+  height: 15%;
   align-items: center;
   justify-content: space-around;
-  padding: 0 20px;
+  /* padding: 0 20px; */
   flex-direction: row;
   gap: 15px;
   // Not joking when I say that removing this comment breaks the entire page.
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  ${Platform.OS === "android" && "elevation: 5;"}
 `;
 
-const Price = styled.Text`
+const Rating = styled.Text`
   text-align: center;
-  font-size: ${normalize(deviceWidth < 600 ? 24 : 20)}px;
+  font-size: ${normalize(deviceWidth < 600 ? 36 : 32)}px;
   font-weight: bold;
   color: ${colors.text};
+  margin-top: 0;
+  width: 100%;
 `;
 
-const PriceDesc = styled(Price)`
-  font-size: ${normalize(deviceWidth < 600 ? 16 : 12)}px;
+const Category = styled(Rating)`
+  font-size: ${normalize(deviceWidth < 600 ? 22 : 18)}px;
+`;
+const RatingDesc = styled(Rating)`
+  font-size: ${normalize(deviceWidth < 600 ? 18 : 14)}px;
 `;
 
 const Divider = styled.View`
@@ -95,4 +97,18 @@ const Divider = styled.View`
   width: 2.5px;
   border-radius: 50px;
   background-color: #909090;
+`;
+
+const Column = styled.View`
+  height: 100%;
+  width: 30%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  background-color: #ffec9e;
+  border-radius: 25px;
+  // Not joking when I say that removing this comment breaks the entire page.
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  ${Platform.OS === "android" && "elevation: 5;"}
 `;

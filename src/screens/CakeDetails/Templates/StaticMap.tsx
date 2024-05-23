@@ -32,7 +32,7 @@ export default StaticMapTemp;
 import styled from "styled-components/native";
 
 const MapContainer = styled.View`
-  width: 90%;
+  width: 100%;
   height: 30%;
   /* margin-top: 20px; */
   border-radius: 25px;
