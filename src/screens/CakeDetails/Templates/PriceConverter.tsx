@@ -81,13 +81,13 @@ const Container = styled.View`
 
 const Price = styled.Text`
   text-align: center;
-  font-size: ${normalize(deviceWidth < 600 ? 24 : 20)}px;
+  font-size: ${normalize(deviceWidth < 500 ? 28 : 22)}px;
   font-weight: bold;
   color: ${colors.text};
 `;
 
 const PriceDesc = styled(Price)`
-  font-size: ${normalize(deviceWidth < 600 ? 16 : 12)}px;
+  font-size: ${normalize(deviceWidth < 500 ? 18 : 12)}px;
 `;
 
 const Divider = styled.View`

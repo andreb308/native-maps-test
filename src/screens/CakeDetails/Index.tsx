@@ -2,7 +2,7 @@ import React from "react";
 import { RootStackParamList } from "../../../routes/stack.routes";
 import { RouteProp } from "@react-navigation/native";
 import StaticMap from "./Templates/StaticMap";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import PriceConverter from "./Templates/PriceConverter";
 import Ratings from "./Templates/Ratings";
 
@@ -60,6 +60,10 @@ export default function CakeDetails({ route }: RouteProps) {
 import styled from "styled-components/native";
 import CakeDescription from "./Templates/CakeDescription";
 import colors from "../../../theme/colors";
+import Constants from "expo-constants";
+import { normalize } from "../../../util/normalize";
+
+const deviceWidth = Dimensions.get("window").width;
 
 const Container = styled.View`
   padding: 20px;
@@ -72,9 +76,9 @@ const Container = styled.View`
 
 const StoreName = styled.Text`
   color: ${colors.text};
-  font-size: 45px;
+  font-size: ${normalize(deviceWidth < 500 ? 45 : 36)}px;
   text-align: center;
-  margin-top: 10%;
+  margin-top: ${Constants.statusBarHeight}px;
   font-weight: bold;
 `;
 

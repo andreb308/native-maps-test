@@ -78,7 +78,7 @@ const Container = styled.View`
 
 const Rating = styled.Text`
   text-align: center;
-  font-size: ${normalize(deviceWidth < 600 ? 36 : 32)}px;
+  font-size: ${normalize(deviceWidth < 500 ? 45 : 28)}px;
   font-weight: bold;
   color: ${colors.text};
   margin-top: 0;
@@ -86,10 +86,10 @@ const Rating = styled.Text`
 `;
 
 const Category = styled(Rating)`
-  font-size: ${normalize(deviceWidth < 600 ? 22 : 18)}px;
+  font-size: ${normalize(deviceWidth < 500 ? 22 : 18)}px;
 `;
 const RatingDesc = styled(Rating)`
-  font-size: ${normalize(deviceWidth < 600 ? 18 : 14)}px;
+  font-size: ${normalize(deviceWidth < 500 ? 18 : 14)}px;
 `;
 
 const Divider = styled.View`

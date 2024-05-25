@@ -1,6 +1,8 @@
 import { MaterialBottomTabScreenProps } from "@react-navigation/material-bottom-tabs";
 import { useState, useEffect } from "react";
-import { Image, Text } from "react-native";
+import { View, Image, Text } from "react-native";
+import { Container, LyricContainer, Button, Input } from "./Style";
+import { AILyricContext, MackleProps } from "./Types";
 
 type RootTabParamList = {
   // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
@@ -11,9 +13,9 @@ type RootTabParamList = {
 type Props = MaterialBottomTabScreenProps<RootTabParamList, "Index">;
 
 export default function Index({ route, navigation }: Props) {
-  useEffect(() => {
-    fetchLyric("Taylor Swift");
-  }, []);
+  // useEffect(() => {
+  //   fetchLyric("Taylor Swift");
+  // }, []);
 
   const fetchLyric = async (artist: string) => {
     try {
@@ -23,9 +25,48 @@ export default function Index({ route, navigation }: Props) {
 
       if (data.status === 500) throw new Error("Erro."); // Caso não encontre nenhuma letra do artista digitado, lança um erro e não atualiza o songData.
       setSongData(data);
+      setLyricContext("");
     } catch (error) {
       alert(`Houve um problema.\n\nO artista '${artist}' não foi encontrado.`); // Exibe um alerta pop-up com o erro.
       setArtistName("");
+    }
+  };
+  const explainLyric = async () => {
+    const title = songData.info.title.split(" by")[0];
+
+    if (title === "Song Title" && artistName === "") {
+      alert("Por favor, busque uma música antes de pedir uma análise.");
+      return;
+    }
+
+    try {
+      const data: AILyricContext = await fetch(
+        `https://gemini-api-test.vercel.app/?prompt="Por favor, forneça uma análise em um parágrafo extremamente encurtado dos temas e metáforas presentes na música '${title}' de ${artistName}. Considere o contexto cultural e artístico ao realizar a análise. A análise é para fins educativos e literários."
+        `
+      ).then((response) => response.json());
+
+      if (data.status === 422) {
+        alert("Houve um erro na busca.\n\nERR:PROMPT_MISSING");
+        return;
+      }
+      if (data.status === 500) {
+        alert("Houve um erro na busca.\n\nERR:INTERNAL_SERVER_ERROR");
+        return;
+      }
+      if (data.status === 502) {
+        alert(
+          "Uma trava de segurança no servidor foi ativada. Tente novamente ou busque outra letra.\n\nERR:BAD_GATEWAY"
+        );
+        return;
+      }
+      if (data.status === 200) {
+        setLyricContext(data.response.candidates[0]!.content.parts[0]!.text);
+      }
+    } catch (error) {
+      alert(
+        `Houve um problema.\n\nNão foi possível buscar o servidor.\n\n${error}`
+      ); // Exibe um alerta pop-up com o erro.
+      // setArtistName("");
     }
   };
 
@@ -35,11 +76,12 @@ export default function Index({ route, navigation }: Props) {
     status: 200,
     info: {
       lyrics:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas tenetur debitis placeat magnam!",
+        "Sua letra aparecerá aqui. Escreva um artista no campo abaixo e clique em 'Buscar'.",
       title: "Song Title by Artist",
       image: "https://cdn2.thecatapi.com/images/MjAyODE3NQ.jpg",
     },
   });
+  const [lyricContext, setLyricContext] = useState("");
 
   return (
     <Container>
@@ -49,6 +91,7 @@ export default function Index({ route, navigation }: Props) {
           source={{ uri: songData.info.image }}
           width={250}
           height={250}
+          borderRadius={10}
         ></Image>
 
         {/* Título */}
@@ -72,79 +115,45 @@ export default function Index({ route, navigation }: Props) {
         onSubmitEditing={() => fetchLyric(artistName)}
       />
 
-      <Button onPress={() => fetchLyric(artistName)}>
-        <Text>Buscar</Text>
-      </Button>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          gap: 15,
+          width: "100%",
+          marginVertical: 20,
+        }}
+      >
+        <Button onPress={() => fetchLyric(artistName)}>
+          <Text>Buscar</Text>
+        </Button>
+        <Button onPress={() => explainLyric()}>
+          <Text>Explicar com IA ✨</Text>
+        </Button>
+      </View>
+      <Text
+        numberOfLines={5}
+        onPress={() => alert(lyricContext)}
+        style={{ fontSize: 16, marginHorizontal: 20, fontStyle: "italic" }}
+      >
+        {lyricContext}
+      </Text>
+      {lyricContext && (
+        <Text
+          style={{
+            fontSize: 12,
+            marginHorizontal: 20,
+            fontStyle: "italic",
+            textAlign: "center",
+            position: "absolute",
+            bottom: 10,
+          }}
+        >
+          {
+            "Explicações podem conter erros em canções recentes ou desconhecidas.\nTexto 100% gerado pelo Gemini 1.0 Pro by Google"
+          }
+        </Text>
+      )}
     </Container>
   );
-}
-
-/******************************************************************/
-import styled from "styled-components/native";
-import colors from "../../../theme/colors";
-
-const Container = styled.View`
-  gap: 20px;
-  flex: 1;
-  background-color: #fffbda;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
-
-const LyricContainer = styled.View`
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-`;
-
-const Button = styled.TouchableOpacity`
-  font-weight: bold;
-  font-size: 16px;
-  color: black;
-  /* background: linear-gradient(90deg, #0066cc 0%, #c500cc 100%); */
-  padding: 10px 30px;
-  border: 2px solid #aaaaaa;
-  border-radius: 50px;
-  transition: 1000ms;
-  transform: translateY(0);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 10px;
-`;
-
-const Input = styled.TextInput.attrs({
-  placeholder: "Digite um artista (ex: Taylor Swift)",
-  cursorColor: "grey",
-  returnKeyType: "search",
-})`
-  background-color: #fff;
-  position: absolute;
-  top: 0%;
-  width: 80%;
-  height: 60px;
-  border-radius: 100px;
-  position: relative;
-  padding-left: 50px;
-  border: 2px solid #eaeaea;
-`;
-
-/******************************************************************/
-
-interface MackleProps {
-  status: 200;
-  info: {
-    lyrics: string;
-    title: string;
-    image: string;
-  };
-}
-
-interface MackleErrorProps {
-  status: 500;
-  info: {};
 }
