@@ -5,6 +5,7 @@ import StaticMap from "./Templates/StaticMap";
 import { Dimensions, View } from "react-native";
 import PriceConverter from "./Templates/PriceConverter";
 import Ratings from "./Templates/Ratings";
+import { StarRatingDisplay } from 'react-native-star-rating-widget'
 
 type RouteProps = {
   route: RouteProp<RootStackParamList, "CakeDetails">;
@@ -26,10 +27,12 @@ export default function CakeDetails({ route }: RouteProps) {
   } = route.params.props;
   return (
     <Container>
-      <View>
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <StoreName>{storeName}</StoreName>
-        <CityName>{city}</CityName>
+        {/* <CityName>{city}</CityName> */}
       </View>
+
+      <StarRatingDisplay rating={rating} color={colors.text} style={{ marginTop: -15, backgroundColor: colors.background, paddingHorizontal: 15, paddingVertical: 15, justifyContent: 'center', borderRadius: 10 }} />
 
       <StaticMap
         latitude={latitude}
@@ -42,16 +45,9 @@ export default function CakeDetails({ route }: RouteProps) {
         priceType={priceType}
         avgWeight={avgWeight}
       />
+
       <Ratings price={price} priceType={priceType} avgWeight={avgWeight} />
-
-      {/* <CContainer> */}
       <CakeDescription description={description} />
-      {/* <CakeFlavors></CakeFlavors>
-      </CContainer> */}
-
-      {/* <CakeDescription style={{ textAlign: "center" }}>
-        {description}
-      </CakeDescription> */}
     </Container>
   );
 }
@@ -86,16 +82,4 @@ const CityName = styled.Text`
   color: ${colors.text};
   font-size: 24px;
   text-align: center;
-`;
-
-const CContainer = styled.View`
-  width: 90%;
-  height: 20%;
-  /* background-color: #d9d9d9; */
-  border-radius: 25px;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-  /* padding: 10px; */
-  /* position: row; */
 `;

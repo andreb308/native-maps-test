@@ -1,4 +1,4 @@
-import { View, Text, Platform } from "react-native";
+import { View, Text, Platform, Alert } from "react-native";
 import React from "react";
 import colors from "../../../../theme/colors";
 
@@ -22,11 +22,13 @@ export default function CakeDescription({
       </Text>
 
       <Text
+        numberOfLines={2}
         style={{
           color: colors.text,
           margin: 0,
           textAlign: "center",
         }}
+        onPress={() => Alert.alert('Descrição', description)}
       >
         {description}
       </Text>
