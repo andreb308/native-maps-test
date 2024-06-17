@@ -1,7 +1,7 @@
 import MapStack from "./stack.routes";
 import IndexScreen from "../src/screens/TextScreen/Index";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import Ionicons from '@expo/vector-icons/Ionicons';
 import colors from "../theme/colors";
 
 // const bottomTabOptions = {
@@ -41,8 +41,9 @@ export default function TabRoutes() {
       }}
       initialRouteName="Map"
       shifting
-      activeColor={"orange"}
-      inactiveColor={colors.text}
+      activeIndicatorStyle={{backgroundColor: colors.activeIndicatorBackground}}
+      activeColor={colors.text}
+      // inactiveColor={colors.text}
       keyboardHidesNavigationBar
     >
       <Tab.Screen
@@ -51,11 +52,7 @@ export default function TabRoutes() {
         options={{
           tabBarLabel: "Bolos",
           tabBarIcon: ({ focused, color }) => (
-            <Icon
-              name={focused ? "location-on" : "location-off"}
-              color={color}
-              size={26}
-            />
+            <Ionicons name={focused ? 'location-sharp' : 'location-outline'} size={26} color={focused ? color : 'gray'} />
           ),
         }}
       ></Tab.Screen>
@@ -65,11 +62,7 @@ export default function TabRoutes() {
         options={{
           tabBarLabel: "Letra",
           tabBarIcon: ({ focused, color }) => (
-            <Icon
-              name={focused ? "music-note" : "music-off"}
-              color={color}
-              size={26}
-            />
+            <Ionicons name={focused ? 'musical-notes-sharp' : 'musical-notes-outline'} size={26} color={focused ? color : 'gray'} />
           ),
         }}
       ></Tab.Screen>
