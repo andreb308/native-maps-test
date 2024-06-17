@@ -6,14 +6,13 @@ export type MackleProps = {
     image: string;
   };
 };
-export type AILyricContext =
-  | GeminiFetchSuccess
-  | GeminiFetchError
-  | {
+export type AILyricContextType =
+    | GeminiFetchSuccess
+    | GeminiFetchError
+    | {
       status: 422;
-      message: "Please provide a prompt.";
+      message: string;
     };
-
 interface MackleErrorProps {
   status: 500;
   info: {};
@@ -30,12 +29,12 @@ interface GeminiFetchSuccess {
         role: "user" | "model";
       };
       finishReason:
-        | "FINISH_REASON_UNSPECIFIED"
-        | "STOP"
-        | "MAX_TOKENS"
-        | "SAFETY"
-        | "RECITATION"
-        | "OTHER";
+      | "FINISH_REASON_UNSPECIFIED"
+      | "STOP"
+      | "MAX_TOKENS"
+      | "SAFETY"
+      | "RECITATION"
+      | "OTHER";
       index: number;
       safetyRatings: {
         category: string;
@@ -45,11 +44,11 @@ interface GeminiFetchSuccess {
         // | "HARM_CATEGORY_HARASSMENT"
         // | "HARM_CATEGORY_DANGEROUS_CONTENT";
         probability:
-          | "HARM_PROBABILITY_UNSPECIFIED"
-          | "NEGLIGIBLE"
-          | "LOW"
-          | "MEDIUM"
-          | "HIGH";
+        | "HARM_PROBABILITY_UNSPECIFIED"
+        | "NEGLIGIBLE"
+        | "LOW"
+        | "MEDIUM"
+        | "HIGH";
       }[];
     }[];
     usageMetadata: {
@@ -69,9 +68,9 @@ interface GeminiFetchError {
     };
   };
   finishReason?:
-    | "FINISH_REASON_UNSPECIFIED"
-    | "MAX_TOKENS"
-    | "SAFETY"
-    | "RECITATION"
-    | "OTHER";
+  | "FINISH_REASON_UNSPECIFIED"
+  | "MAX_TOKENS"
+  | "SAFETY"
+  | "RECITATION"
+  | "OTHER";
 }

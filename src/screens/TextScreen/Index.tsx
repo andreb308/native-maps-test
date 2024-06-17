@@ -1,8 +1,9 @@
 import { MaterialBottomTabScreenProps } from "@react-navigation/material-bottom-tabs";
 import { useState, useEffect } from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, Alert } from "react-native";
 import { Container, LyricContainer, Button, Input } from "./Style";
-import { AILyricContext, MackleProps } from "./Types";
+import { AILyricContextType, MackleProps } from "./Types";
+import api from "../../../util/api";
 
 type RootTabParamList = {
   // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
@@ -13,9 +14,9 @@ type RootTabParamList = {
 type Props = MaterialBottomTabScreenProps<RootTabParamList, "Index">;
 
 export default function Index({ route, navigation }: Props) {
-  // useEffect(() => {
-  //   fetchLyric("Taylor Swift");
-  // }, []);
+  useEffect(() => {
+    fetchLyric("Taylor Swift");
+  }, []);
 
   const fetchLyric = async (artist: string) => {
     try {
@@ -32,7 +33,10 @@ export default function Index({ route, navigation }: Props) {
     }
   };
   const explainLyric = async () => {
-    const title = songData.info.title.split(" by")[0];
+    let [title, artist] = songData.info.title.split("by");
+    const lyric = songData.info.lyrics;
+    artist = artist?.trim();
+    title = title?.trim();
 
     if (title === "Song Title" && artistName === "") {
       alert("Por favor, busque uma música antes de pedir uma análise.");
@@ -40,27 +44,24 @@ export default function Index({ route, navigation }: Props) {
     }
 
     try {
-      const data: AILyricContext = await fetch(
-        `https://gemini-api-test.vercel.app/?prompt="Por favor, forneça uma análise em um parágrafo extremamente encurtado dos temas e metáforas presentes na música '${title}' de ${artistName}. Considere o contexto cultural e artístico ao realizar a análise. A análise é para fins educativos e literários."
-        `
-      ).then((response) => response.json());
+      const response = await api.get<AILyricContextType>("/", { params: { title, artist, lyric } }).then (response => response.data)
 
-      if (data.status === 422) {
+      if (response.status === 422) {
         alert("Houve um erro na busca.\n\nERR:PROMPT_MISSING");
         return;
       }
-      if (data.status === 500) {
+      if (response.status === 500) {
         alert("Houve um erro na busca.\n\nERR:INTERNAL_SERVER_ERROR");
         return;
       }
-      if (data.status === 502) {
+      if (response.status === 502) {
         alert(
           "Uma trava de segurança no servidor foi ativada. Tente novamente ou busque outra letra.\n\nERR:BAD_GATEWAY"
         );
         return;
       }
-      if (data.status === 200) {
-        setLyricContext(data.response.candidates[0]!.content.parts[0]!.text);
+      if (response.status === 200) {
+        setLyricContext(response.response.candidates[0]!.content.parts[0]!.text);
       }
     } catch (error) {
       alert(
@@ -133,7 +134,7 @@ export default function Index({ route, navigation }: Props) {
       </View>
       <Text
         numberOfLines={5}
-        onPress={() => alert(lyricContext)}
+        onPress={() => Alert.alert("Contexto", lyricContext)}
         style={{ fontSize: 16, marginHorizontal: 20, fontStyle: "italic" }}
       >
         {lyricContext}
@@ -150,7 +151,7 @@ export default function Index({ route, navigation }: Props) {
           }}
         >
           {
-            "Explicações podem conter erros em canções recentes ou desconhecidas.\nTexto 100% gerado pelo Gemini 1.0 Pro by Google"
+            "Explicações podem conter erros em canções recentes ou desconhecidas.\nTexto 100% gerado pelo Gemini 1.5 Flash by Google"
           }
         </Text>
       )}
