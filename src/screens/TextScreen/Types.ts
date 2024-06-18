@@ -37,12 +37,13 @@ interface GeminiFetchSuccess {
       | "OTHER";
       index: number;
       safetyRatings: {
-        category: string;
+        category:
+        | "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+        | "HARM_CATEGORY_HATE_SPEECH"
+        | "HARM_CATEGORY_HARASSMENT"
+        | "HARM_CATEGORY_DANGEROUS_CONTENT"
+        | "HARM_CATEGORY_UNSPECIFIED";	
         // https://ai.google.dev/api/rest/v1/HarmCategory?hl=pt-br
-        // | "HARM_CATEGORY_SEXUALLY_EXPLICIT"
-        // | "HARM_CATEGORY_HATE_SPEECH"
-        // | "HARM_CATEGORY_HARASSMENT"
-        // | "HARM_CATEGORY_DANGEROUS_CONTENT";
         probability:
         | "HARM_PROBABILITY_UNSPECIFIED"
         | "NEGLIGIBLE"

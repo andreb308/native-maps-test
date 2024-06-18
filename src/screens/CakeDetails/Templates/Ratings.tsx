@@ -61,15 +61,15 @@ export default function PriceConverter({
 }
 
 import styled from "styled-components/native";
-import { normalize } from "../../../../util/normalize";
 import colors from "../../../../theme/colors";
+import { moderateVerticalScale } from 'react-native-size-matters';
 
 const Container = styled.View`
   width: 100%;
-  /* max-width: 800px; */
+  max-width: 650px;
   height: 15%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   /* padding: 0 20px; */
   flex-direction: row;
   gap: 15px;
@@ -78,7 +78,7 @@ const Container = styled.View`
 
 const Rating = styled.Text`
   text-align: center;
-  font-size: ${normalize(deviceWidth < 500 ? 45 : 28)}px;
+  font-size: ${moderateVerticalScale(36, 0.3)}px;
   font-weight: bold;
   color: ${colors.text};
   margin-top: 0;
@@ -86,10 +86,10 @@ const Rating = styled.Text`
 `;
 
 const Category = styled(Rating)`
-  font-size: ${normalize(deviceWidth < 500 ? 22 : 18)}px;
+  font-size: ${moderateVerticalScale(18, 0.3)}px;
 `;
 const RatingDesc = styled(Rating)`
-  font-size: ${normalize(deviceWidth < 500 ? 18 : 14)}px;
+  font-size: ${moderateVerticalScale(14, 0.3)}px;
 `;
 
 const Divider = styled.View`
@@ -102,6 +102,8 @@ const Divider = styled.View`
 const Column = styled.View`
   height: 100%;
   width: 30%;
+  max-width: 150px;
+  max-height: 150px;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;

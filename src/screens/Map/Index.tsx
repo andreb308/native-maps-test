@@ -6,7 +6,6 @@ import { Container, StyledMap } from "./Style";
 import { useAppContext } from "../AppContext";
 
 import BottomScroller from "./Templates/BottomScroller";
-// import BottomScroller from "./Templates/BottomScroller";
 import LoadingView from "./Templates/LoadingView";
 import CityInput from "./Templates/CityInput";
 import { Keyboard } from "react-native";

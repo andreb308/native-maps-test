@@ -57,14 +57,13 @@ import styled from "styled-components/native";
 import CakeDescription from "./Templates/CakeDescription";
 import colors from "../../../theme/colors";
 import Constants from "expo-constants";
-import { normalize } from "../../../util/normalize";
-
-const deviceWidth = Dimensions.get("window").width;
+import { moderateScale, verticalScale } from "react-native-size-matters";
 
 const Container = styled.View`
   padding: 20px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: ${verticalScale(16)}px;
   padding-top: 20px;
   flex: 1;
   background-color: #fffbda;
@@ -72,7 +71,7 @@ const Container = styled.View`
 
 const StoreName = styled.Text`
   color: ${colors.text};
-  font-size: ${normalize(deviceWidth < 500 ? 45 : 36)}px;
+  font-size: ${moderateScale(36)}px;
   text-align: center;
   margin-top: ${Constants.statusBarHeight}px;
   font-weight: bold;

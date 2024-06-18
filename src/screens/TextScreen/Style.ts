@@ -29,8 +29,6 @@ export const Button = styled.TouchableOpacity`
   padding: 10px 30px;
   border: 2px solid #aaaaaa;
   border-radius: 50px;
-  transition: 1000ms;
-  transform: translateY(0);
   display: flex;
   flex-direction: row;
   align-items: center;

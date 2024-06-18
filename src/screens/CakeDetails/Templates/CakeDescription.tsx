@@ -12,7 +12,7 @@ export default function CakeDescription({
       <Text
         style={{
           color: colors.text,
-          fontSize: 20,
+          fontSize: moderateVerticalScale(18, 0.3),
           fontWeight: "bold",
           margin: 0,
           textAlign: "center",
@@ -25,6 +25,7 @@ export default function CakeDescription({
         numberOfLines={2}
         style={{
           color: colors.text,
+          fontSize: moderateVerticalScale(14, 0.3),
           margin: 0,
           textAlign: "center",
         }}
@@ -37,18 +38,16 @@ export default function CakeDescription({
 }
 
 import styled from "styled-components/native";
+import { moderateVerticalScale } from "react-native-size-matters";
 
 const Container = styled.View`
-  /* marginTop: 20, */
   width: 80%;
-  height: 10%;
   background-color: ${colors.background};
   border-radius: 25px;
-  /* alignItems: "center", */
   justify-content: flex-start;
   flex-direction: column;
-  /* gap: 15px; */
-  padding: 5px 20px;
+  gap: 5px;
+  padding: 10px 20px;
   // Not joking when I say that removing this comment breaks the entire page.
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   ${Platform.OS === "android" && "elevation: 5;"}

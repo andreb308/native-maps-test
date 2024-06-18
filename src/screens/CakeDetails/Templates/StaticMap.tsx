@@ -33,6 +33,7 @@ import styled from "styled-components/native";
 
 const MapContainer = styled.View`
   width: 100%;
+  max-width: 650px;
   height: 30%;
   /* margin-top: 20px; */
   border-radius: 25px;
