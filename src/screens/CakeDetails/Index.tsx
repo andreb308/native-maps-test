@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import { RootStackParamList } from "../../../routes/stack.routes";
 import { RouteProp } from "@react-navigation/native";
 import StaticMap from "./Templates/StaticMap";
-import { Dimensions, View } from "react-native";
+import { Dimensions, Text, View } from "react-native";
 import PriceConverter from "./Templates/PriceConverter";
 import Ratings from "./Templates/Ratings";
-import { StarRatingDisplay } from 'react-native-star-rating-widget'
+import { StarRatingDisplay } from "react-native-star-rating-widget";
+
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetScrollView,
+} from "@gorhom/bottom-sheet";
 
 type RouteProps = {
   route: RouteProp<RootStackParamList, "CakeDetails">;
@@ -25,29 +31,83 @@ export default function CakeDetails({ route }: RouteProps) {
     priceType,
     avgWeight,
   } = route.params.props;
+
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const handlePresentModalPress = () => {
+    bottomSheetModalRef.current?.present();
+  };
+
+  const handleSheetChanges = (index: number) => {
+    console.log("handleSheetChanges", index);
+  };
+
+  const snapPoints = ["25%", "45%"];
   return (
     <Container>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <StoreName>{storeName}</StoreName>
-        {/* <CityName>{city}</CityName> */}
-      </View>
+      <BottomSheetModalProvider>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <StoreName>{storeName}</StoreName>
+          {/* <CityName>{city}</CityName> */}
+        </View>
 
-      <StarRatingDisplay rating={rating} color={colors.text} style={{ marginTop: -15, backgroundColor: colors.background, paddingHorizontal: 15, paddingVertical: 15, justifyContent: 'center', borderRadius: 10 }} />
+        <StarRatingDisplay
+          rating={rating}
+          color={colors.text}
+          style={{
+            marginTop: -15,
+            backgroundColor: colors.background,
+            paddingHorizontal: 15,
+            paddingVertical: 15,
+            justifyContent: "center",
+            borderRadius: 10,
+          }}
+        />
 
-      <StaticMap
-        latitude={latitude}
-        longitude={longitude}
-        storeName={storeName}
-      />
+        <StaticMap
+          latitude={latitude}
+          longitude={longitude}
+          storeName={storeName}
+        />
 
-      <PriceConverter
-        price={price}
-        priceType={priceType}
-        avgWeight={avgWeight}
-      />
+        <PriceConverter
+          price={price}
+          priceType={priceType}
+          avgWeight={avgWeight}
+        />
 
-      <Ratings price={price} priceType={priceType} avgWeight={avgWeight} />
-      <CakeDescription description={description} />
+        <Ratings price={price} priceType={priceType} avgWeight={avgWeight} />
+        <CakeDescription
+          description={description}
+          handlePress={handlePresentModalPress}
+        />
+
+        <BottomSheetModal
+          handleStyle={{
+            borderTopLeftRadius: 250,
+            borderTopRightRadius: 250,
+            backgroundColor: colors.activeIndicatorBackground,
+          }}
+          // style={{maxWidth: 650}}
+          ref={bottomSheetModalRef}
+          index={1}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}
+        >
+          <BottomSheetScrollView
+            contentContainerStyle={{
+              alignItems: "center",
+              backgroundColor: colors.activeIndicatorBackground,
+              justifyContent: "center",
+              paddingTop: verticalScale(75),
+              minHeight: "100%",
+            }}
+          >
+            <ModalTitle>Observações</ModalTitle>
+            <ModalDesc>{description}</ModalDesc>
+          </BottomSheetScrollView>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
     </Container>
   );
 }
@@ -57,7 +117,11 @@ import styled from "styled-components/native";
 import CakeDescription from "./Templates/CakeDescription";
 import colors from "../../../theme/colors";
 import Constants from "expo-constants";
-import { moderateScale, verticalScale } from "react-native-size-matters";
+import {
+  moderateScale,
+  moderateVerticalScale,
+  verticalScale,
+} from "react-native-size-matters";
 
 const Container = styled.View`
   padding: 20px;
@@ -81,4 +145,25 @@ const CityName = styled.Text`
   color: ${colors.text};
   font-size: 24px;
   text-align: center;
+`;
+
+const ModalDesc = styled.Text`
+  color: ${colors.text};
+  text-align: center;
+  font-size: ${moderateVerticalScale(24, 0.3)}px;
+  margin: 0 20px 0;
+  font-weight: 500;
+  max-width: 750px;
+  background-color: ${colors.activeIndicatorBackground} ;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+`;
+
+const ModalTitle = styled(StoreName)`
+  font-size: ${moderateVerticalScale(40, 0.3)}px;
+  margin-top: ${moderateVerticalScale(30, 0.3)}px;
+  position: absolute;
+  top: 0px;
+  max-width: 650px;
 `;

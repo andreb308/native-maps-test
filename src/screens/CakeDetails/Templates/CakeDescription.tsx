@@ -3,9 +3,10 @@ import React from "react";
 import colors from "../../../../theme/colors";
 
 export default function CakeDescription({
-  description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae sit itaque incidunt labore!",
+  description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae sit itaque incidunt labore!", handlePress = () => {}
 }: {
   description: string;
+  handlePress: any;
 }) {
   return (
     <Container>
@@ -29,7 +30,7 @@ export default function CakeDescription({
           margin: 0,
           textAlign: "center",
         }}
-        onPress={() => Alert.alert('Descrição', description)}
+        onPress={handlePress}
       >
         {description}
       </Text>
