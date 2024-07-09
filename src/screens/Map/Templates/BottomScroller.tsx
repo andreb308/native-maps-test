@@ -45,7 +45,8 @@ export default function BottomScroller() {
             <BottomCard
               key={item.storeID}
               onPress={() => {
-                navigation.navigate("CakeDetails", { props: item });
+               (item.storeID !== -1) &&
+                  navigation.navigate("CakeDetails", { props: item });
               }}
             >
               <FlexColumn>
@@ -57,7 +58,17 @@ export default function BottomScroller() {
                   R${item.price.toFixed(2)}
                   <PriceType> {item.priceType}</PriceType>
                 </Price>
-              <StarRatingDisplay style={{height: '60%', alignItems: 'center', justifyContent: 'center'}} starStyle={{marginHorizontal: 0}} rating={item.rating} color={colors.text} starSize={20} />
+                <StarRatingDisplay
+                  style={{
+                    height: "60%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  starStyle={{ marginHorizontal: 0 }}
+                  rating={item.rating}
+                  color={colors.text}
+                  starSize={20}
+                />
               </PriceContainer>
             </BottomCard>
           )}

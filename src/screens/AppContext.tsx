@@ -36,7 +36,7 @@ const AppContext = createContext<AppContextInterface | null>(null);
 export const AppContextProvider: React.FC<any> = ({ children }) => {
   const [data, setData] = useState<CakesInfo>([
     {
-      storeID: 1,
+      storeID: -1,
       storeName: "Carregando...",
       latitude: -22.2827158,
       longitude: -42.5314,

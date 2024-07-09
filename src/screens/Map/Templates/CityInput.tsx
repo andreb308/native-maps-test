@@ -79,6 +79,7 @@ export default CitySearch;
 import styled from "styled-components/native";
 import { pointerEventsAttrs } from "../Style";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import colors from "../../../../theme/colors";
 
 export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
   position: relative;
@@ -95,7 +96,7 @@ export const StyledInput = styled.TextInput.attrs({
   cursorColor: "grey",
   returnKeyType: "search",
 })`
-  background-color: #fff;
+  background-color: #fffbda;
   width: 100%;
   height: 60px;
   border-radius: 100px;
@@ -107,7 +108,7 @@ export const StyledInput = styled.TextInput.attrs({
 export const InputIcon = styled(Icon).attrs({
   name: "location-on",
   size: 30,
-  color: "#5f5f5f",
+  color: colors.text,
 })`
   position: absolute;
   left: 15px;
