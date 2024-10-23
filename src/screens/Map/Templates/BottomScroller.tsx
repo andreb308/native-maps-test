@@ -45,7 +45,7 @@ export default function BottomScroller() {
             <BottomCard
               key={item.storeID}
               onPress={() => {
-               (item.storeID !== -1) &&
+                item.storeID !== -1 &&
                   navigation.navigate("CakeDetails", { props: item });
               }}
             >
@@ -84,6 +84,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../routes/stack.routes.js";
 import colors from "../../../../theme/colors";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
+import React from "react";
 
 const BottomCard = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
@@ -92,11 +93,11 @@ const BottomCard = styled.TouchableOpacity.attrs({
   justify-content: center;
   flex-direction: row;
   background-color: #fffbda;
-  border-radius: 25px;
+  border-radius: 10px;
   /* border-top-right-radius: 50px; */
   margin: 0 10px;
   box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.3); /* Standard CSS box-shadow */
-  border: 1px solid #ddd;
+  border: 1px solid ${colors.activeIndicatorBackground};
   height: ${CARD_HEIGHT}px;
   width: ${CARD_WIDTH}px;
   padding: 10px 20px;

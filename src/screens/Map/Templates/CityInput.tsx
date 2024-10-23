@@ -86,9 +86,10 @@ export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
   background-color: transparent;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 100%;
   height: 60px;
   margin-top: 48px;
+  padding: 0 20px;
 `;
 
 export const StyledInput = styled.TextInput.attrs({
@@ -99,7 +100,7 @@ export const StyledInput = styled.TextInput.attrs({
   background-color: #fffbda;
   width: 100%;
   height: 60px;
-  border-radius: 100px;
+  border-radius: 10px;
   position: relative;
   padding-left: 50px;
   border: 2px solid #eaeaea;
@@ -111,5 +112,5 @@ export const InputIcon = styled(Icon).attrs({
   color: colors.text,
 })`
   position: absolute;
-  left: 15px;
+  left: 32px;
 `;

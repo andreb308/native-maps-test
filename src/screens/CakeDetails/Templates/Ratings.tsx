@@ -62,7 +62,7 @@ export default function PriceConverter({
 
 import styled from "styled-components/native";
 import colors from "../../../../theme/colors";
-import { moderateVerticalScale } from 'react-native-size-matters';
+import { moderateVerticalScale } from "react-native-size-matters";
 
 const Container = styled.View`
   width: 100%;
@@ -73,7 +73,6 @@ const Container = styled.View`
   /* padding: 0 20px; */
   flex-direction: row;
   gap: 15px;
-  // Not joking when I say that removing this comment breaks the entire page.
 `;
 
 const Rating = styled.Text`
@@ -109,8 +108,6 @@ const Column = styled.View`
   justify-content: space-between;
   padding: 18px 0;
   background-color: #ffec9e;
-  border-radius: 25px;
-  // Not joking when I say that removing this comment breaks the entire page.
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  ${Platform.OS === "android" && "elevation: 5;"}
+  border-radius: 10px;
+  border: 2px solid ${colors.activeIndicatorBackground};
 `;

@@ -69,15 +69,13 @@ const Container = styled.View`
   height: 12.5%;
   max-height: 120px;
   background-color: #ffec9e;
-  border-radius: 25px;
+  border-radius: 10px;
+  border: 1px solid ${colors.activeIndicatorBackground};
   align-items: center;
   justify-content: space-around;
   padding: 0 20px;
   flex-direction: row;
   gap: 15px;
-  // Not joking when I say that removing this comment breaks the entire page.
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  ${Platform.OS === "android" && "elevation: 5;"}
 `;
 
 const Price = styled.Text`

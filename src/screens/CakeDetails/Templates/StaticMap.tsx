@@ -30,17 +30,16 @@ export default StaticMapTemp;
 ////////////////////////////////////////////////////////////////////////////
 
 import styled from "styled-components/native";
+import colors from "../../../../theme/colors";
 
 const MapContainer = styled.View`
   width: 100%;
   max-width: 650px;
   height: 30%;
   /* margin-top: 20px; */
-  border-radius: 25px;
+  border-radius: 10px;
   overflow: hidden;
-  // Figma drop shadow
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  ${Platform.OS === "android" && "elevation: 5;"}
+  border: 2px solid ${colors.activeIndicatorBackground};
 `;
 const StaticMap = styled(MapView).attrs({
   zoomEnabled: false,

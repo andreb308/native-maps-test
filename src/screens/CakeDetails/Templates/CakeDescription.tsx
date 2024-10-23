@@ -3,13 +3,14 @@ import React from "react";
 import colors from "../../../../theme/colors";
 
 export default function CakeDescription({
-  description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae sit itaque incidunt labore!", handlePress = () => {}
+  description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae sit itaque incidunt labore!",
+  handlePress = () => {},
 }: {
   description: string;
   handlePress: any;
 }) {
   return (
-    <Container>
+    <Container onPress={handlePress}>
       <Text
         style={{
           color: colors.text,
@@ -30,7 +31,6 @@ export default function CakeDescription({
           margin: 0,
           textAlign: "center",
         }}
-        onPress={handlePress}
       >
         {description}
       </Text>
@@ -41,15 +41,14 @@ export default function CakeDescription({
 import styled from "styled-components/native";
 import { moderateVerticalScale } from "react-native-size-matters";
 
-const Container = styled.View`
-  width: 80%;
+const Container = styled.TouchableOpacity`
+  width: 100%;
+  max-width: 650px;
   background-color: ${colors.background};
-  border-radius: 25px;
+  border-radius: 10px;
   justify-content: flex-start;
   flex-direction: column;
   gap: 5px;
   padding: 10px 20px;
-  // Not joking when I say that removing this comment breaks the entire page.
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  ${Platform.OS === "android" && "elevation: 5;"}
+  border: 2px solid ${colors.activeIndicatorBackground};
 `;
