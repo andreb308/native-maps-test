@@ -9,6 +9,7 @@ import BottomScroller from "./Templates/BottomScroller";
 import LoadingView from "./Templates/LoadingView";
 import CityInput from "./Templates/CityInput";
 import { Keyboard } from "react-native";
+import React from "react";
 
 export default function Map() {
   const { data, handleFetch, mapRef, cityList, loading } = useAppContext();
