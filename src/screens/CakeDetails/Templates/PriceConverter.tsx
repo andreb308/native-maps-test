@@ -70,7 +70,7 @@ const Container = styled.View`
   max-height: 120px;
   background-color: #ffec9e;
   border-radius: 10px;
-  border: 1px solid ${colors.activeIndicatorBackground};
+  border: 2px solid ${colors.activeIndicatorBackground};
   align-items: center;
   justify-content: space-around;
   padding: 0 20px;
