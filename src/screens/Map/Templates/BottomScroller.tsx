@@ -19,10 +19,12 @@ export default function BottomScroller() {
     longitude: number;
   };
   const handleMapMove = (obj: Coords) => {
-    mapRef.current?.animateToRegion(
-      { ...obj, latitudeDelta: 0.002, longitudeDelta: 0.002 },
-      2000
-    );
+    mapRef.current?.animateCamera({
+      center: { ...obj },
+      pitch: 50,
+      heading: 50,
+      zoom: 18,
+    });
   };
   return (
     <>

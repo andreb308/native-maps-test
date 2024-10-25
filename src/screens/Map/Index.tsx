@@ -24,16 +24,20 @@ export default function Map() {
     console.log("Current location:", location);
   };
 
+  const handleMapLoad = () => {mapRef.current?.animateCamera({center: { latitude: -22.2827158, longitude: -42.5314 },pitch: 50,heading: 50,
+  })}
+
   useEffect(() => {
     getLocationAsync();
     handleFetch();
+    
   }, []);
 
   return (
     <>
       {loading && <LoadingView />}
 
-      <StyledMap ref={mapRef} onPress={() => Keyboard.dismiss()}>
+      <StyledMap ref={mapRef} onPress={() => Keyboard.dismiss()} onMapLoaded={() => handleMapLoad()} >
         {cityList.map((city) => (
           <Marker key={city.id} coordinate={city.coordinates}></Marker>
         ))}
