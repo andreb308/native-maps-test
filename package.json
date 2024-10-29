@@ -10,6 +10,7 @@
     "tunnel": "expo start --tunnel"
   },
   "dependencies": {
+    "@devvie/bottom-sheet": "^0.4.2",
     "@expo/vector-icons": "^14.0.4",
     "@expo/webpack-config": "~19.0.1",
     "@gorhom/bottom-sheet": "^4.6.4",
