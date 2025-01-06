@@ -2,7 +2,7 @@
   "expo": {
     "name": "Bolo Certo",
     "slug": "bolo-certo",
-    "version": "3.2.7",
+    "version": "3.2.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

@@ -4,6 +4,7 @@ import { View, Image, Text, Alert } from "react-native";
 import { Container, LyricContainer, Button, Input } from "./Style";
 import { AILyricContextType, MackleProps } from "./Types";
 import api from "../../../util/api";
+import colors from "../../../theme/colors";
 
 type RootTabParamList = {
   // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
@@ -13,9 +14,9 @@ type RootTabParamList = {
 
 type Props = MaterialBottomTabScreenProps<RootTabParamList, "Index">;
 
-export default function Index({ route, navigation }: Props) {
+export default function AI_LyricScreen({ route, navigation }: Props) {
   useEffect(() => {
-    fetchLyric("Taylor Swift");
+    explainLyric();
   }, []);
 
   const fetchLyric = async (artist: string) => {
@@ -28,8 +29,8 @@ export default function Index({ route, navigation }: Props) {
       setSongData(data);
       setLyricContext("");
     } catch (error) {
-      alert(`Houve um problema.\n\nO artista '${artist}' não foi encontrado.`); // Exibe um alerta pop-up com o erro.
-      setArtistName("");
+      alert(`Houve um problema na busca por ${artist}.`); // Exibe um alerta pop-up com o erro.
+      // setArtistName("");
     }
   };
   const explainLyric = async () => {
@@ -44,7 +45,9 @@ export default function Index({ route, navigation }: Props) {
     }
 
     try {
-      const response = await api.get<AILyricContextType>("/", { params: { title, artist, lyric } }).then (response => response.data)
+      const response = await api
+        .get<AILyricContextType>("/", { params: { title, artist, lyric } })
+        .then((response) => response.data);
 
       if (response.status === 422) {
         alert("Houve um erro na busca.\n\nERR:PROMPT_MISSING");
@@ -61,7 +64,9 @@ export default function Index({ route, navigation }: Props) {
         return;
       }
       if (response.status === 200) {
-        setLyricContext(response.response.candidates[0]!.content.parts[0]!.text);
+        setLyricContext(
+          response.response.candidates[0]!.content.parts[0]!.text
+        );
       }
     } catch (error) {
       alert(
@@ -77,9 +82,10 @@ export default function Index({ route, navigation }: Props) {
     status: 200,
     info: {
       lyrics:
-        "Sua letra aparecerá aqui. Escreva um artista no campo abaixo e clique em 'Buscar'.",
-      title: "Song Title by Artist",
-      image: "https://cdn2.thecatapi.com/images/MjAyODE3NQ.jpg",
+        "And I won't confess that I waited, but I let the lamp burn\nAs the men masqueraded, I hoped you'd return\nWith your feet on the ground, tell me all that you'd learned\n'Cause love's never lost when perspective is earned",
+      title: "Peter by Taylor Swift",
+      image:
+        "https://images.genius.com/060181ac1b325992184cbe693e0318e1.1000x1000x1.png",
     },
   });
   const [lyricContext, setLyricContext] = useState("");
@@ -135,7 +141,7 @@ export default function Index({ route, navigation }: Props) {
       <Text
         numberOfLines={5}
         onPress={() => Alert.alert("Contexto", lyricContext)}
-        style={{ fontSize: 16, marginHorizontal: 20, fontStyle: "italic" }}
+        style={{ fontSize: 16, marginHorizontal: 20, fontStyle: "italic", backgroundColor: colors.activeIndicatorBackground, padding: 10, borderRadius: 10 }}
       >
         {lyricContext}
       </Text>
