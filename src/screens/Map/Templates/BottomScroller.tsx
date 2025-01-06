@@ -33,8 +33,8 @@ export default function BottomScroller() {
           loop
           width={width}
           height={1.3 * CARD_HEIGHT}
-          // autoPlay={true}
-          // autoPlayInterval={5000}
+          autoPlay={true}
+          autoPlayInterval={5000}
           scrollAnimationDuration={1000}
           data={data}
           onSnapToItem={(index) =>
