@@ -39,7 +39,7 @@ const MapContainer = styled.View`
   /* margin-top: 20px; */
   border-radius: 10px;
   overflow: hidden;
-  border: 2px solid ${colors.activeIndicatorBackground};
+  border: 2px solid ${colors.background};
 `;
 const StaticMap = styled(MapView).attrs({
   zoomEnabled: false,

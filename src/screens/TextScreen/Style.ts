@@ -22,7 +22,7 @@ export const LyricContainer = styled.View`
 `;
 
 export const Button = styled.TouchableOpacity`
-  font-weight: bold;
+  font-family: "Inter_700Bold";
   font-size: 16px;
   color: black;
   /* background: linear-gradient(90deg, #0066cc 0%, #c500cc 100%); */

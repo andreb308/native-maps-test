@@ -15,7 +15,7 @@ export default function CakeDescription({
         style={{
           color: colors.text,
           fontSize: moderateVerticalScale(18, 0.3),
-          fontWeight: "bold",
+          fontFamily: "Inter_700Bold",
           margin: 0,
           textAlign: "center",
         }}
@@ -30,6 +30,7 @@ export default function CakeDescription({
           fontSize: moderateVerticalScale(14, 0.3),
           margin: 0,
           textAlign: "center",
+          fontFamily: "Inter_500Medium",
         }}
       >
         {description}

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { RootStackParamList } from "../../../routes/stack.routes";
 import { RouteProp } from "@react-navigation/native";
 import StaticMap from "./Templates/StaticMap";
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { View } from "react-native";
 import PriceConverter from "./Templates/PriceConverter";
 import Ratings from "./Templates/Ratings";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
@@ -55,6 +55,8 @@ export default function CakeDetails({ route }: RouteProps) {
           paddingVertical: 15,
           justifyContent: "center",
           borderRadius: 10,
+          borderWidth: 2,
+          borderColor: colors.activeIndicatorBackground,
         }}
       />
 
@@ -105,6 +107,7 @@ import {
   moderateVerticalScale,
   verticalScale,
 } from "react-native-size-matters";
+import { InterText } from "../../../theme/globalStyle";
 
 const Container = styled.View`
   padding: 20px;
@@ -116,31 +119,33 @@ const Container = styled.View`
   background-color: #fffbda;
 `;
 
-const StoreName = styled.Text`
+const StoreName = styled(InterText)`
   color: ${colors.text};
-  font-size: ${moderateScale(36)}px;
+  font-size: ${moderateScale(34)}px;
+  font-family: "Inter_700Bold";
   text-align: center;
   margin-top: ${Constants.statusBarHeight}px;
-  font-weight: bold;
+  /* font-weight: bold; */
 `;
 
-const CityName = styled.Text`
+const CityName = styled(InterText)`
   color: ${colors.text};
   font-size: 24px;
   text-align: center;
 `;
 
-const ModalDesc = styled.Text`
+const ModalDesc = styled(InterText)`
   color: ${colors.text};
   text-align: center;
-  font-size: ${moderateVerticalScale(24, 0.3)}px;
+  font-size: ${moderateVerticalScale(22, 0.3)}px;
+  width: 90%;
   margin: 0 20px 0;
-  font-weight: 500;
+  font-family: "Inter_600SemiBold";
   max-width: 750px;
   background-color: ${colors.activeIndicatorBackground};
   padding: 15px;
   margin-top: 20px;
-  border-radius: 10px;
+  border-radius: 25px;
 `;
 
 const ModalTitle = styled(StoreName)`

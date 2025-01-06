@@ -63,6 +63,7 @@ export default function PriceConverter({
 import styled from "styled-components/native";
 import colors from "../../../../theme/colors";
 import { moderateVerticalScale } from "react-native-size-matters";
+import { InterText } from "../../../../theme/globalStyle";
 
 const Container = styled.View`
   width: 100%;
@@ -75,10 +76,10 @@ const Container = styled.View`
   gap: 15px;
 `;
 
-const Rating = styled.Text`
+const Rating = styled(InterText)`
   text-align: center;
   font-size: ${moderateVerticalScale(36, 0.3)}px;
-  font-weight: bold;
+  font-family: "Inter_700Bold";
   color: ${colors.text};
   margin-top: 0;
   width: 100%;
@@ -88,6 +89,7 @@ const Category = styled(Rating)`
   font-size: ${moderateVerticalScale(18, 0.3)}px;
 `;
 const RatingDesc = styled(Rating)`
+  font-family: "Inter_600SemiBold";
   font-size: ${moderateVerticalScale(14, 0.3)}px;
 `;
 

@@ -1,4 +1,4 @@
-import { Animated, Dimensions, Platform, Text, View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Carousel from "react-native-reanimated-carousel";
 
@@ -21,8 +21,8 @@ export default function BottomScroller() {
   const handleMapMove = (obj: Coords) => {
     mapRef.current?.animateCamera({
       center: { ...obj },
-      pitch: 50,
-      heading: 50,
+      pitch: 30,
+      // heading: 20,
       zoom: 18,
     });
   };
@@ -33,8 +33,8 @@ export default function BottomScroller() {
           loop
           width={width}
           height={1.3 * CARD_HEIGHT}
-          autoPlay={true}
-          autoPlayInterval={5000}
+          // autoPlay={true}
+          // autoPlayInterval={5000}
           scrollAnimationDuration={1000}
           data={data}
           onSnapToItem={(index) =>
@@ -87,6 +87,7 @@ import { RootStackParamList } from "../../../../routes/stack.routes.js";
 import colors from "../../../../theme/colors";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import React from "react";
+import { InterText } from "../../../../theme/globalStyle";
 
 const BottomCard = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
@@ -115,18 +116,15 @@ const FlexColumn = styled.View`
   /* background-color: pink; */
 `;
 
-const StoreName = styled.Text`
-  /* Inter font */
-  /* font-family: "Inter", sans-serif; */
+const StoreName = styled(InterText)`
   height: 50%;
-  /* font-size: ${0.05 * width}px; */
+  font-family: "Inter_700Bold";
+  /* font-weight: 700; */
   font-size: 26px;
-  font-weight: 700;
   text-align: center;
-  /* text-wrap: ; */
 `;
 
-const StoreDesc = styled.Text`
+const StoreDesc = styled(InterText)`
   height: 50%;
   text-align: center;
   font-size: 12px;
@@ -141,19 +139,19 @@ const PriceContainer = styled.View`
   text-align: center;
 `;
 
-const Price = styled.Text`
+const Price = styled(InterText)`
   /* width: 100%; */
   height: 40%;
   text-align: center;
   font-size: 26px;
-  font-weight: bold;
+  font-family: "Inter_700Bold";
   color: ${colors.text};
 `;
 
-const PriceType = styled.Text`
+const PriceType = styled(InterText)`
   font-size: 12px;
   /* width: 100%; */
   /* text-align: right; */
-  font-weight: bold;
+  font-family: "Inter_700Bold";
   color: ${colors.text};
 `;
