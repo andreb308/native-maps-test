@@ -11,6 +11,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 export default function BottomScroller() {
   const { data, handleFetch, mapRef } = useAppContext();
+  const [loop, setLoop] = useState(true);
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "MapView">>();
 
@@ -33,7 +34,7 @@ export default function BottomScroller() {
           loop
           width={width}
           height={1.3 * CARD_HEIGHT}
-          autoPlay={true}
+          autoPlay={loop}
           autoPlayInterval={5000}
           scrollAnimationDuration={1000}
           data={data}
@@ -45,6 +46,8 @@ export default function BottomScroller() {
           }
           renderItem={({ item }) => (
             <BottomCard
+              loop={loop}
+              onLongPress={() => setLoop((l) => !l)}
               key={item.storeID}
               onPress={() => {
                 item.storeID !== -1 &&
@@ -86,12 +89,12 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../routes/stack.routes.js";
 import colors from "../../../../theme/colors";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
-import React from "react";
+import React, { useState } from "react";
 import { InterText } from "../../../../theme/globalStyle";
 
 const BottomCard = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
-})`
+})<{ loop: boolean }>`
   align-items: center;
   justify-content: center;
   flex-direction: row;
@@ -100,7 +103,7 @@ const BottomCard = styled.TouchableOpacity.attrs({
   /* border-top-right-radius: 50px; */
   margin: 0 10px;
   box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.3); /* Standard CSS box-shadow */
-  border: 1px solid ${colors.activeIndicatorBackground};
+  border: 2px ${(p) => (p.loop ? "solid" : "dashed")} ${colors.activeIndicatorBackground};
   height: ${CARD_HEIGHT}px;
   width: ${CARD_WIDTH}px;
   padding: 10px 20px;

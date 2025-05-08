@@ -1,10 +1,11 @@
 import { MaterialBottomTabScreenProps } from "@react-navigation/material-bottom-tabs";
-import { useState, useEffect } from "react";
-import { View, Image, Text, Alert } from "react-native";
+import { useState, useEffect, useRef } from "react";
+import { View, Image, Text } from "react-native";
 import { Container, LyricContainer, Button, Input } from "./Style";
 import { AILyricContextType, MackleProps } from "./Types";
 import api from "../../../util/api";
 import colors from "../../../theme/colors";
+import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet/src";
 
 type RootTabParamList = {
   // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
@@ -15,6 +16,8 @@ type RootTabParamList = {
 type Props = MaterialBottomTabScreenProps<RootTabParamList, "Index">;
 
 export default function AI_LyricScreen({ route, navigation }: Props) {
+
+  const bottomSheetModalRef = useRef<BottomSheetMethods>(null);
   useEffect(() => {
     explainLyric();
   }, []);
@@ -82,10 +85,10 @@ export default function AI_LyricScreen({ route, navigation }: Props) {
     status: 200,
     info: {
       lyrics:
-        "And I won't confess that I waited, but I let the lamp burn\nAs the men masqueraded, I hoped you'd return\nWith your feet on the ground, tell me all that you'd learned\n'Cause love's never lost when perspective is earned",
-      title: "Peter by Taylor Swift",
+        "And you call me up again just to break me like a promise\nSo casually cruel in the name of bein' honest\nI'm a crumpled-up piece of paper lyin' here\n'Cause I remember it all, all, all... too well.",
+      title: "All Too Well (10 Minute Version)\nby Taylor Swift",
       image:
-        "https://images.genius.com/060181ac1b325992184cbe693e0318e1.1000x1000x1.png",
+        "https://t2.genius.com/unsafe/484x484/https%3A%2F%2Fimages.genius.com%2F9dd4ba749dd51d39d7b56b67b9cc3777.1000x1000x1.jpg",
     },
   });
   const [lyricContext, setLyricContext] = useState("");
@@ -140,7 +143,7 @@ export default function AI_LyricScreen({ route, navigation }: Props) {
       </View>
       <Text
         numberOfLines={5}
-        onPress={() => Alert.alert("Contexto", lyricContext)}
+        onPress={() => bottomSheetModalRef.current?.open()}
         style={{ fontSize: 16, marginHorizontal: 20, fontStyle: "italic", backgroundColor: colors.activeIndicatorBackground, padding: 10, borderRadius: 10 }}
       >
         {lyricContext}
@@ -157,10 +160,60 @@ export default function AI_LyricScreen({ route, navigation }: Props) {
           }}
         >
           {
-            "Explicações podem conter erros em canções recentes ou desconhecidas.\nTexto 100% gerado pelo Gemini 1.5 Flash by Google"
+            "Explicações podem conter erros em canções recentes ou desconhecidas.\nTexto 100% gerado pelo Gemini 2.0 Flash by Google"
           }
         </Text>
       )}
+          <BottomSheet
+            animationType="spring"
+            backdropMaskColor="#00000088"
+            height="80%"
+            ref={bottomSheetModalRef}
+            style={{
+              backgroundColor: colors.background,
+            }}
+          >
+            <View style={{ alignItems: "center" }}>
+              <ModalTitle>{songData.info.title.split("\n").join(" ")}</ModalTitle>
+              <ModalDesc>{lyricContext.trim()}</ModalDesc>
+            </View>
+          </BottomSheet>
     </Container>
   );
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import styled from "styled-components/native";
+import { moderateVerticalScale } from "react-native-size-matters";
+import { InterText } from "../../../theme/globalStyle"
+
+export const ModalDesc = styled(InterText)`
+  color: ${colors.text};
+  text-align: justify;
+  font-size: ${moderateVerticalScale(18, 0.3)}px;
+  width: 90%;
+  margin: 0 20px 0;
+  font-family: "Inter_600SemiBold";
+  max-width: 750px;
+  background-color: ${colors.activeIndicatorBackground};
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 25px;
+`;
+
+export const ModalTitle = styled.Text`
+
+color: ${colors.text};
+  font-family: "Inter_700Bold";
+  text-align: center;
+  /* font-weight: bold; */
+  font-size: ${moderateVerticalScale(26, 0.3)}px;
+  margin-top: ${moderateVerticalScale(20, 0.3)}px;
+  margin-left: ${moderateVerticalScale(8, 0.3)}px;
+  margin-right: ${moderateVerticalScale(8, 0.3)}px;
+  /* position: absolute;
+  top: 0px; */
+  max-width: 650px;
+`;

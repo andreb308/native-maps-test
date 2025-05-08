@@ -134,7 +134,7 @@ const CityName = styled(InterText)`
   text-align: center;
 `;
 
-const ModalDesc = styled(InterText)`
+export const ModalDesc = styled(InterText)`
   color: ${colors.text};
   text-align: center;
   font-size: ${moderateVerticalScale(22, 0.3)}px;
@@ -148,7 +148,7 @@ const ModalDesc = styled(InterText)`
   border-radius: 25px;
 `;
 
-const ModalTitle = styled(StoreName)`
+export const ModalTitle = styled(StoreName)`
   font-size: ${moderateVerticalScale(40, 0.3)}px;
   margin-top: ${moderateVerticalScale(20, 0.3)}px;
   /* position: absolute;
