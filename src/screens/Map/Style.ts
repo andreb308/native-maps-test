@@ -35,7 +35,7 @@ export const Container = styled.View.attrs(pointerEventsAttrs)`
   align-items: center;
   justify-content: space-between;
 `;
-
+//@ts-expect-error
 export const StyledMap = styled(MapView).attrs(MapViewAttrs)`
   width: 100%;
   height: 100%;

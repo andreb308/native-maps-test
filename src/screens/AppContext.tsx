@@ -58,7 +58,7 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
   // The handleFetch function
   const handleFetch = async () => {
     const textResponse: CakesInfo = await fetch(
-      "https://lace-fifth-dragonfly.glitch.me/"
+      "https://bolo-certo-api.vercel.app"
     ).then((res) => res.json());
     setData(textResponse);
   };
