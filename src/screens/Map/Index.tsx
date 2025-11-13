@@ -1,6 +1,7 @@
-import { Marker } from "react-native-maps";
+import { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { useEffect } from "react";
 import * as Location from "expo-location";
+import Constants from 'expo-constants';
 
 import { Container, StyledMap } from "./Style";
 import { useAppContext } from "../AppContext";
@@ -42,9 +43,26 @@ export default function Map() {
       {loading && <LoadingView />}
 
       <StyledMap
+        initialRegion={{
+          latitude: -22.2827158,
+          longitude: -42.5314,
+          latitudeDelta: 0.001,
+          longitudeDelta: 0.001,
+        }}
+        mapType="standard"
+        showsUserLocation={true}
+        showsMyLocationButton={false}
+        showsScale={true}
+        mapPadding={{
+          top: Constants.statusBarHeight,
+          right: 5,
+          bottom: 5,
+          left: 5,
+        }}
         ref={mapRef}
         onPress={() => Keyboard.dismiss()}
         onMapLoaded={() => handleMapLoad()}
+        provider={PROVIDER_GOOGLE}
       >
         {cityList.map((city) => (
           <Marker key={city.id} coordinate={city.coordinates}></Marker>

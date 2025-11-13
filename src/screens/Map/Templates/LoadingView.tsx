@@ -12,7 +12,7 @@ const Loading: React.FC = () => {
 export default Loading;
 
 /*****************************************************************/
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 
 export const LoadingView = styled.View`
   width: 100%;

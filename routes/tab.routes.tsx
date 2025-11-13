@@ -1,21 +1,10 @@
+import React from "react";
 import MapStack from "./stack.routes";
 import IndexScreen from "../src/screens/TextScreen/Index";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import Ionicons from '@expo/vector-icons/Ionicons';
-import colors from "../theme/colors";
-
-// const bottomTabOptions = {
-//   tabBarShowLabel: false,
-//   // tabBarBadge: "",
-//   // tabBarLabelPosition: "beside-icon",
-//   tabBarActiveTintColor: "red",
-//   tabBarInactiveTintColor: "black",
-//   tabBarActiveBackgroundColor: "pink",
-//   tabBarHideOnKeyboard: true,
-//   headerShown: false,
-//   shifting: true,
-//   // header: () => {},
-// };
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Provider, BottomNavigation } from "react-native-paper";
+import { CommonActions } from "@react-navigation/native";
 
 type RootTabParamList = {
   // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
@@ -23,49 +12,96 @@ type RootTabParamList = {
   Index: undefined;
 };
 
-const Tab = createMaterialBottomTabNavigator<RootTabParamList>();
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export default function TabRoutes() {
   return (
-    <Tab.Navigator
-      barStyle={{
-        backgroundColor: "white",
-        // bottom: 300,
-        // height: 30,
-        // display: "flex",
-        // alignItems: "center",
-        // justifyContent: "center",
-        // margin: 0,
-        // padding: 0, // Set your desired height here
-        // Other styling properties can be added here
-      }}
-      initialRouteName="Map"
-      shifting
-      activeIndicatorStyle={{backgroundColor: colors.activeIndicatorBackground}}
-      activeColor={colors.text}
-      // inactiveColor={colors.text}
-      keyboardHidesNavigationBar
-    >
-      <Tab.Screen
-        name="Map"
-        component={MapStack}
-        options={{
-          tabBarLabel: "Bolos",
-          tabBarIcon: ({ focused, color }) => (
-            <Ionicons name={focused ? 'location-sharp' : 'location-outline'} size={26} color={focused ? color : 'gray'} />
-          ),
+    <Provider>
+      <Tab.Navigator
+        
+        tabBar={({ navigation, state, descriptors, insets }) => (
+          <BottomNavigation.Bar
+          
+            shifting={true}
+            navigationState={state}
+            safeAreaInsets={insets}
+            compact
+            onTabPress={({ route, preventDefault }) => {
+              const event = navigation.emit({
+                type: "tabPress",
+                target: route.key,
+                canPreventDefault: true,
+              });
+
+              if (event.defaultPrevented) {
+                preventDefault();
+              } else {
+                navigation.dispatch({
+                  ...CommonActions.navigate(route.name, route.params),
+                  target: state.key,
+                });
+              }
+            }}
+            renderIcon={({ route, focused, color }) =>
+              descriptors[route.key].options.tabBarIcon?.({
+                focused,
+                color,
+                size: 24,
+              }) || null
+            }
+            getLabelText={({ route }) => {
+              const { options } = descriptors[route.key];
+              const label =
+                typeof options.tabBarLabel === "string"
+                  ? options.tabBarLabel
+                  : typeof options.title === "string"
+                  ? options.title
+                  : route.name;
+
+              return label;
+            }}
+            activeColor="darkred"
+            inactiveColor="black"
+            // onTabLongPress={({ route }) => {
+            //   // refresh on long press
+            //   navigation.dispatch({
+            //     ...CommonActions.navigate(route.name, route.params),
+            //   });
+            // }}
+            keyboardHidesNavigationBar={false}
+          />
+        )}
+        screenOptions={{
+          headerShown: false,
         }}
-      ></Tab.Screen>
-      <Tab.Screen
-        name="Index"
-        component={IndexScreen}
-        options={{
-          tabBarLabel: "Letra",
-          tabBarIcon: ({ focused, color }) => (
-            <Ionicons name={focused ? 'musical-notes-sharp' : 'musical-notes-outline'} size={26} color={focused ? color : 'gray'} />
-          ),
-        }}
-      ></Tab.Screen>
-    </Tab.Navigator>
+      >
+        <Tab.Screen
+          name="Map"
+          component={MapStack}
+          options={{
+            tabBarIcon: ({ color, focused }) => (
+              <Ionicons
+                name={focused ? "location-sharp" : "location-outline"}
+                size={26}
+                color={focused ? color : "gray"}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Index"
+          component={IndexScreen}
+          options={{
+            tabBarIcon: ({ color, focused }) => (
+              <Ionicons
+                name={focused ? "musical-notes-sharp" : "musical-notes-outline"}
+                size={26}
+                color={focused ? color : "gray"}
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </Provider>
   );
 }

@@ -1,6 +1,6 @@
-import { MaterialBottomTabScreenProps } from "@react-navigation/material-bottom-tabs";
-import { useState, useEffect, useRef } from "react";
-import { View, Image, Text } from "react-native";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Image, Platform } from "react-native";
 import { Container, LyricContainer, Button, Input } from "./Style";
 import { AILyricContextType, MackleProps } from "./Types";
 import api from "../../../util/api";
@@ -13,10 +13,9 @@ type RootTabParamList = {
   Index: undefined;
 };
 
-type Props = MaterialBottomTabScreenProps<RootTabParamList, "Index">;
+type Props = BottomTabScreenProps<RootTabParamList, "Index">;
 
 export default function AI_LyricScreen({ route, navigation }: Props) {
-
   const bottomSheetModalRef = useRef<BottomSheetMethods>(null);
   useEffect(() => {
     explainLyric();
@@ -106,23 +105,29 @@ export default function AI_LyricScreen({ route, navigation }: Props) {
 
         {/* Título */}
         <Text
-          style={{ textAlign: "center", fontSize: 24, marginHorizontal: 20 }}
+          variant="headlineMedium"
+          style={{ textAlign: "center", marginHorizontal: 20 }}
         >
           {songData.info.title}
         </Text>
 
         {/* Letra */}
         <Text
-          style={{ fontSize: 16, marginHorizontal: 20, fontStyle: "italic" }}
+          variant="titleMedium"
+          style={{ marginHorizontal: 30, fontStyle: "italic" }}
         >
           "{songData.info.lyrics}"
         </Text>
       </LyricContainer>
 
       <Input
+        placeholder="Digite um artista (ex: Taylor Swift)"
+        cursorColor="grey"
+        returnKeyType="search"
         value={artistName}
         onChangeText={(text) => setArtistName(text)}
         onSubmitEditing={() => fetchLyric(artistName)}
+        underlineColorAndroid="#ffffff00"
       />
 
       <View
@@ -144,14 +149,20 @@ export default function AI_LyricScreen({ route, navigation }: Props) {
       <Text
         numberOfLines={5}
         onPress={() => bottomSheetModalRef.current?.open()}
-        style={{ fontSize: 16, marginHorizontal: 20, fontStyle: "italic", backgroundColor: colors.activeIndicatorBackground, padding: 10, borderRadius: 10 }}
+        style={{
+          marginHorizontal: 20,
+          fontStyle: "italic",
+          backgroundColor: colors.activeIndicatorBackground,
+          padding: 10,
+          borderRadius: 10,
+        }}
+        variant="bodyLarge"
       >
         {lyricContext}
       </Text>
       {lyricContext && (
         <Text
           style={{
-            fontSize: 12,
             marginHorizontal: 20,
             fontStyle: "italic",
             textAlign: "center",
@@ -160,36 +171,39 @@ export default function AI_LyricScreen({ route, navigation }: Props) {
           }}
         >
           {
-            "Explicações podem conter erros em canções recentes ou desconhecidas.\nTexto 100% gerado pelo Gemini 2.0 Flash by Google"
+            "Explicações podem conter erros em canções recentes ou desconhecidas.\nTexto 100% gerado pelo Gemini 2.5 Flash by Google"
           }
         </Text>
       )}
-          <BottomSheet
-            animationType="spring"
-            backdropMaskColor="#00000088"
-            height="80%"
-            ref={bottomSheetModalRef}
-            style={{
-              backgroundColor: colors.background,
-            }}
-          >
-            <View style={{ alignItems: "center" }}>
-              <ModalTitle>{songData.info.title.split("\n").join(" ")}</ModalTitle>
-              <ModalDesc>{lyricContext.trim()}</ModalDesc>
-            </View>
-          </BottomSheet>
+      <BottomSheet
+        animationType="spring"
+        backdropMaskColor="#00000088"
+        height="80%"
+        ref={bottomSheetModalRef}
+        style={{
+          backgroundColor: colors.background,
+        }}
+      >
+        <View style={{ alignItems: "center" }}>
+          <ModalTitle variant="headlineLarge">
+            {songData.info.title.split("\n").join(" ")}
+          </ModalTitle>
+          <ModalDesc variant="titleMedium">{lyricContext.trim()}</ModalDesc>
+        </View>
+      </BottomSheet>
     </Container>
   );
 }
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 import { moderateVerticalScale } from "react-native-size-matters";
-import { InterText } from "../../../theme/globalStyle"
+import { InterText } from "../../../theme/globalStyle";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { Text } from "react-native-paper";
 
-export const ModalDesc = styled(InterText)`
+export const ModalDesc = styled(Text)`
   color: ${colors.text};
   text-align: justify;
   font-size: ${moderateVerticalScale(18, 0.3)}px;
@@ -203,16 +217,15 @@ export const ModalDesc = styled(InterText)`
   border-radius: 25px;
 `;
 
-export const ModalTitle = styled.Text`
-
-color: ${colors.text};
+export const ModalTitle = styled(Text)`
+  color: ${colors.text};
   font-family: "Inter_700Bold";
   text-align: center;
   /* font-weight: bold; */
   font-size: ${moderateVerticalScale(26, 0.3)}px;
-  margin-top: ${moderateVerticalScale(20, 0.3)}px;
-  margin-left: ${moderateVerticalScale(8, 0.3)}px;
-  margin-right: ${moderateVerticalScale(8, 0.3)}px;
+  /* margin-top: ${moderateVerticalScale(20, 0.3)}px; */
+  margin-left: 8px;
+  margin-right: 8px;
   /* position: absolute;
   top: 0px; */
   max-width: 650px;

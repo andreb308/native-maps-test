@@ -1,5 +1,5 @@
 import Constants from "expo-constants";
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 
 export const Container = styled.View`
   /* gap: 20px; */
@@ -9,8 +9,6 @@ export const Container = styled.View`
   /* justify-content: (p) => (p.center ? "center" : "flex-start"); */
   justify-content: center;
   padding-top: ${Constants.statusBarHeight * 1.1}px;
-  width: 100%;
-  height: 100%;
   position: relative;
 `;
 
@@ -35,11 +33,7 @@ export const Button = styled.TouchableOpacity`
   /* margin-top: 10px; */
 `;
 
-export const Input = styled.TextInput.attrs({
-  placeholder: "Digite um artista (ex: Taylor Swift)",
-  cursorColor: "grey",
-  returnKeyType: "search",
-})`
+export const Input = styled.TextInput`
   background-color: #fff;
   /* top: 0%; */
   width: 80%;

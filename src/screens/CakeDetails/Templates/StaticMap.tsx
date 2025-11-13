@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Platform } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { MapMarker, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 type StaticMapProps = {
   latitude: number;
@@ -9,17 +9,31 @@ type StaticMapProps = {
 };
 
 const StaticMapTemp = ({ latitude, longitude, storeName }: StaticMapProps) => {
+
+  const markerRef = useRef<MapMarker>(null)
+  const onRegionChangeComplete = () => {
+    if (markerRef && markerRef.current && markerRef.current.showCallout) {
+      markerRef.current.showCallout();
+    }
+  };
   return (
     <MapContainer>
       <StaticMap
-        initialRegion={{
-          latitude,
-          longitude,
-          latitudeDelta: 0.001,
-          longitudeDelta: 0.001,
+        zoomEnabled={false}
+        scrollEnabled={false}
+        zoomControlEnabled={false}
+        rotateEnabled={false}
+        toolbarEnabled
+        provider={PROVIDER_GOOGLE}
+        onMapLoaded={() => onRegionChangeComplete()}
+        initialCamera={{
+          center: {latitude, longitude},
+          pitch: 30,
+          heading: 20,
+          zoom: 18,
         }}
       >
-        <Marker coordinate={{ latitude, longitude }} title={storeName}></Marker>
+        <Marker ref={markerRef} coordinate={{ latitude, longitude }} title={storeName}></Marker>
       </StaticMap>
     </MapContainer>
   );
@@ -29,7 +43,7 @@ export default StaticMapTemp;
 
 ////////////////////////////////////////////////////////////////////////////
 
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 import colors from "../../../../theme/colors";
 
 const MapContainer = styled.View`
@@ -41,10 +55,8 @@ const MapContainer = styled.View`
   overflow: hidden;
   border: 2px solid ${colors.background};
 `;
-const StaticMap = styled(MapView).attrs({
-  zoomEnabled: false,
-  scrollEnabled: false,
-})`
+
+const StaticMap = styled(MapView)`
   width: 100%;
   height: 100%;
 `;

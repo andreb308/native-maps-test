@@ -39,7 +39,7 @@ export default function CakeDescription({
   );
 }
 
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 import { moderateVerticalScale } from "react-native-size-matters";
 
 const Container = styled.TouchableOpacity`

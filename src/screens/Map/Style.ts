@@ -1,32 +1,15 @@
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 import MapView, { MapViewProps } from "react-native-maps";
 import Constants from "expo-constants";
 
-export const pointerEventsAttrs: Object = {
-  pointerEvents: "box-none",
-};
+// export const pointerEventsAttrs: Object = {
+// };
 
-const MapViewAttrs: MapViewProps = {
-  initialRegion: {
-    latitude: -22.2827158,
-    longitude: -42.5314,
-    latitudeDelta: 0.001,
-    longitudeDelta: 0.001,
-  },
-  mapType: "standard",
-  provider: "google",
-  showsUserLocation: true,
-  showsMyLocationButton: false,
-  showsScale: true,
-  mapPadding: {
-    top: Constants.statusBarHeight,
-    right: 5,
-    bottom: 5,
-    left: 5,
-  },
-};
+// const MapViewAttrs: MapViewProps = {
+//   ,
+// };
 
-export const Container = styled.View.attrs(pointerEventsAttrs)`
+export const Container = styled.View(`
   width: 100%;
   height: 100%;
   /* position: abs */
@@ -34,9 +17,9 @@ export const Container = styled.View.attrs(pointerEventsAttrs)`
   /* z-index: 1; */
   align-items: center;
   justify-content: space-between;
-`;
-//@ts-expect-error
-export const StyledMap = styled(MapView).attrs(MapViewAttrs)`
+`);
+
+export const StyledMap = styled(MapView)`
   width: 100%;
   height: 100%;
   position: absolute;

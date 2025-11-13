@@ -5,7 +5,7 @@ import Carousel from "react-native-reanimated-carousel";
 import { useAppContext } from "../../AppContext";
 
 const { width, height } = Dimensions.get("window");
-const CARD_HEIGHT = 100;
+const CARD_HEIGHT = 80;
 const CARD_WIDTH = width * 0.85;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
@@ -15,11 +15,7 @@ export default function BottomScroller() {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "MapView">>();
 
-  type Coords = {
-    latitude: number;
-    longitude: number;
-  };
-  const handleMapMove = (obj: Coords) => {
+  const handleMapMove = (obj: LatLng) => {
     mapRef.current?.animateCamera({
       center: { ...obj },
       pitch: 30,
@@ -46,6 +42,7 @@ export default function BottomScroller() {
           }
           renderItem={({ item }) => (
             <BottomCard
+            activeOpacity={0.7}
               loop={loop}
               onLongPress={() => setLoop((l) => !l)}
               key={item.storeID}
@@ -55,13 +52,13 @@ export default function BottomScroller() {
               }}
             >
               <FlexColumn>
-                <StoreName>{item.storeName}</StoreName>
-                <StoreDesc numberOfLines={2}>{item.description}</StoreDesc>
+                <StoreName variant="headlineSmall">{item.storeName}</StoreName>
+                <StoreDesc variant="bodySmall" numberOfLines={2}>{item.description}</StoreDesc>
               </FlexColumn>
               <PriceContainer>
-                <Price>
+                <Price variant="headlineSmall">
                   R${item.price.toFixed(2)}
-                  <PriceType> {item.priceType}</PriceType>
+                  <PriceType variant="labelSmall" > {item.priceType}</PriceType>
                 </Price>
                 <StarRatingDisplay
                   style={{
@@ -84,17 +81,16 @@ export default function BottomScroller() {
 }
 
 /********************************************************/
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../routes/stack.routes.js";
 import colors from "../../../../theme/colors";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import React, { useState } from "react";
 import { InterText } from "../../../../theme/globalStyle";
+import { LatLng } from "react-native-maps";
 
-const BottomCard = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.7,
-})<{ loop: boolean }>`
+const BottomCard = styled.TouchableOpacity<{ loop: boolean }>`
   align-items: center;
   justify-content: center;
   flex-direction: row;

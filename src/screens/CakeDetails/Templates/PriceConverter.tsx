@@ -33,33 +33,33 @@ export default function PriceConverter({
 
   return (
     <Container>
-      <Price>
+      <Price variant="headlineSmall">
         {`R$${
-          priceType === "/kg" ? price.toFixed(2) : pricePerKg.toFixed(2)
+          priceType === "/kg" ? price.toFixed(2).replace('.', ',') : pricePerKg.toFixed(2).replace('.', ',')
         }\n`}
-        <PriceDesc>por quilo</PriceDesc>
+        <PriceDesc variant="labelLarge">por quilo</PriceDesc>
       </Price>
 
       <Divider />
 
-      <Price>
-        {`R$${pricePer350g.toFixed(2)}\n`}
-        <PriceDesc>por 350g</PriceDesc>
+      <Price variant="headlineSmall">
+        {`R$${pricePer350g.toFixed(2).replace('.', ',')}\n`}
+        <PriceDesc variant="labelLarge">por 350g</PriceDesc>
       </Price>
 
       <Divider />
 
-      <Price>
+      <Price variant="headlineSmall">
         {`R$${
-          priceType === "/fatia" ? price.toFixed(2) : pricePerSlice.toFixed(2)
+          priceType === "/fatia" ? price.toFixed(2).replace('.', ',') : pricePerSlice.toFixed(2).replace('.', ',')
         }\n`}
-        <PriceDesc>por fatia</PriceDesc>
+        <PriceDesc variant="labelLarge">por fatia</PriceDesc>
       </Price>
     </Container>
   );
 }
 
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 import colors from "../../../../theme/colors";
 import { moderateVerticalScale } from "react-native-size-matters";
 import { InterText } from "../../../../theme/globalStyle";

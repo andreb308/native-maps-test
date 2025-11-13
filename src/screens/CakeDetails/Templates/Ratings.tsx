@@ -34,33 +34,33 @@ export default function PriceConverter({
   return (
     <Container>
       <Column>
-        <Category>Tamanho</Category>
-        <Rating>
-          8<RatingDesc>/10</RatingDesc>
+        <Category variant="titleLarge">Tamanho</Category>
+        <Rating variant="displayMedium">
+          8<RatingDesc variant="titleMedium">/10</RatingDesc>
         </Rating>
       </Column>
       {/* <Divider /> */}
 
       <Column>
-        <Category>Variedade</Category>
-        <Rating>
-          9<RatingDesc>/10</RatingDesc>
+        <Category variant="titleLarge">Variedade</Category>
+        <Rating variant="displayMedium">
+          9<RatingDesc variant="titleMedium">/10</RatingDesc>
         </Rating>
       </Column>
 
       {/* <Divider /> */}
 
       <Column>
-        <Category>Custo</Category>
-        <Rating>
-          10<RatingDesc>/10</RatingDesc>
+        <Category variant="titleLarge">Custo</Category>
+        <Rating variant="displayMedium">
+          10<RatingDesc variant="titleMedium">/10</RatingDesc>
         </Rating>
       </Column>
     </Container>
   );
 }
 
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 import colors from "../../../../theme/colors";
 import { moderateVerticalScale } from "react-native-size-matters";
 import { InterText } from "../../../../theme/globalStyle";

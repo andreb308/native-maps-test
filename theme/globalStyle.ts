@@ -1,5 +1,6 @@
-import styled from 'styled-components/native'
+import styled from '@emotion/native'
+import {Text} from 'react-native-paper'
 
-export const InterText = styled.Text`
+export const InterText = styled(Text)`
     font-family: "Inter_400Regular" ;
 `

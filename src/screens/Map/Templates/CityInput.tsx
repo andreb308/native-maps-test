@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAppContext } from "../../AppContext";
 import { GeocodeInfo } from "../Types";
 import { Keyboard, TextInput } from "react-native";
@@ -61,13 +61,16 @@ function CitySearch() {
   };
 
   return (
-    <SearchContainer>
+    <SearchContainer pointerEvents="box-none">
       <StyledInput
+        placeholder="Digite um local"
+        cursorColor="grey"
+        returnKeyType="search"
         value={locationSearch}
         onChangeText={(e) => setLocationSearch(e)}
         onSubmitEditing={() => handleLocationSearch()}
       />
-      <InputIcon />
+      <InputIcon name="location-on" size={30} color={colors.text} />
     </SearchContainer>
   );
 }
@@ -76,12 +79,11 @@ export default CitySearch;
 
 /***************************************************/
 
-import styled from "styled-components/native";
-import { pointerEventsAttrs } from "../Style";
+import styled from "@emotion/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import colors from "../../../../theme/colors";
 
-export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
+export const SearchContainer = styled.View`
   position: relative;
   background-color: transparent;
   align-items: center;
@@ -92,11 +94,7 @@ export const SearchContainer = styled.View.attrs(pointerEventsAttrs)`
   padding: 0 20px;
 `;
 
-export const StyledInput = styled.TextInput.attrs({
-  placeholder: "Digite um local",
-  cursorColor: "grey",
-  returnKeyType: "search",
-})`
+export const StyledInput = styled.TextInput`
   background-color: #fffbda;
   width: 100%;
   height: 60px;
@@ -106,11 +104,7 @@ export const StyledInput = styled.TextInput.attrs({
   border: 2px solid #eaeaea;
 `;
 
-export const InputIcon = styled(Icon).attrs({
-  name: "location-on",
-  size: 30,
-  color: colors.text,
-})`
+export const InputIcon = styled(Icon)`
   position: absolute;
   left: 32px;
 `;

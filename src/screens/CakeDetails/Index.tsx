@@ -49,7 +49,6 @@ export default function CakeDetails({ route }: RouteProps) {
         rating={rating}
         color={colors.text}
         style={{
-          marginTop: -15,
           backgroundColor: colors.background,
           paddingHorizontal: 15,
           paddingVertical: 15,
@@ -64,6 +63,7 @@ export default function CakeDetails({ route }: RouteProps) {
         latitude={latitude}
         longitude={longitude}
         storeName={storeName}
+        
       />
 
       <PriceConverter
@@ -98,7 +98,7 @@ export default function CakeDetails({ route }: RouteProps) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-import styled from "styled-components/native";
+import styled from "@emotion/native";
 import CakeDescription from "./Templates/CakeDescription";
 import colors from "../../../theme/colors";
 import Constants from "expo-constants";
@@ -115,13 +115,14 @@ const Container = styled.View`
   justify-content: center;
   gap: ${verticalScale(16)}px;
   padding-top: 20px;
+  gap: 12px;
   flex: 1;
   background-color: #fffbda;
 `;
 
 const StoreName = styled(InterText)`
   color: ${colors.text};
-  font-size: ${moderateScale(34)}px;
+  font-size: 34px;
   font-family: "Inter_700Bold";
   text-align: center;
   margin-top: ${Constants.statusBarHeight}px;
