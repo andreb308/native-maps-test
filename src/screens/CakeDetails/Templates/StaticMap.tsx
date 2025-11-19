@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Platform } from "react-native";
 import MapView, { MapMarker, Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { MapContainer, StyledMapView } from "../Style";
 
 type StaticMapProps = {
   latitude: number;
@@ -18,7 +19,7 @@ const StaticMapTemp = ({ latitude, longitude, storeName }: StaticMapProps) => {
   };
   return (
     <MapContainer>
-      <StaticMap
+      <StyledMapView
         zoomEnabled={false}
         scrollEnabled={false}
         zoomControlEnabled={false}
@@ -27,36 +28,16 @@ const StaticMapTemp = ({ latitude, longitude, storeName }: StaticMapProps) => {
         provider={PROVIDER_GOOGLE}
         onMapLoaded={() => onRegionChangeComplete()}
         initialCamera={{
-          center: {latitude, longitude},
+          center: { latitude, longitude },
           pitch: 30,
           heading: 20,
           zoom: 18,
         }}
       >
         <Marker ref={markerRef} coordinate={{ latitude, longitude }} title={storeName}></Marker>
-      </StaticMap>
+      </StyledMapView>
     </MapContainer>
   );
 };
 
 export default StaticMapTemp;
-
-////////////////////////////////////////////////////////////////////////////
-
-import styled from "@emotion/native";
-import colors from "../../../../theme/colors";
-
-const MapContainer = styled.View`
-  width: 100%;
-  max-width: 650px;
-  height: 30%;
-  /* margin-top: 20px; */
-  border-radius: 10px;
-  overflow: hidden;
-  border: 2px solid ${colors.background};
-`;
-
-const StaticMap = styled(MapView)`
-  width: 100%;
-  height: 100%;
-`;

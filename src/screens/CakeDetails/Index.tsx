@@ -7,6 +7,15 @@ import PriceConverter from "./Templates/PriceConverter";
 import Ratings from "./Templates/Ratings";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet/src";
+import colors from "../../../theme/colors";
+import CakeDescription from "./Templates/CakeDescription";
+import {
+  Container,
+  StoreName,
+  CityName,
+  ModalDesc,
+  ModalTitle,
+} from "./Style";
 
 type RouteProps = {
   route: RouteProp<RootStackParamList, "CakeDetails">;
@@ -63,7 +72,7 @@ export default function CakeDetails({ route }: RouteProps) {
         latitude={latitude}
         longitude={longitude}
         storeName={storeName}
-        
+
       />
 
       <PriceConverter
@@ -96,63 +105,3 @@ export default function CakeDetails({ route }: RouteProps) {
     </Container>
   );
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-import styled from "@emotion/native";
-import CakeDescription from "./Templates/CakeDescription";
-import colors from "../../../theme/colors";
-import Constants from "expo-constants";
-import {
-  moderateScale,
-  moderateVerticalScale,
-  verticalScale,
-} from "react-native-size-matters";
-import { InterText } from "../../../theme/globalStyle";
-
-const Container = styled.View`
-  padding: 20px;
-  align-items: center;
-  justify-content: center;
-  gap: ${verticalScale(16)}px;
-  padding-top: 20px;
-  gap: 12px;
-  flex: 1;
-  background-color: #fffbda;
-`;
-
-const StoreName = styled(InterText)`
-  color: ${colors.text};
-  font-size: 34px;
-  font-family: "Inter_700Bold";
-  text-align: center;
-  margin-top: ${Constants.statusBarHeight}px;
-  /* font-weight: bold; */
-`;
-
-const CityName = styled(InterText)`
-  color: ${colors.text};
-  font-size: 24px;
-  text-align: center;
-`;
-
-export const ModalDesc = styled(InterText)`
-  color: ${colors.text};
-  text-align: center;
-  font-size: ${moderateVerticalScale(22, 0.3)}px;
-  width: 90%;
-  margin: 0 20px 0;
-  font-family: "Inter_600SemiBold";
-  max-width: 750px;
-  background-color: ${colors.activeIndicatorBackground};
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 25px;
-`;
-
-export const ModalTitle = styled(StoreName)`
-  font-size: ${moderateVerticalScale(40, 0.3)}px;
-  margin-top: ${moderateVerticalScale(20, 0.3)}px;
-  /* position: absolute;
-  top: 0px; */
-  max-width: 650px;
-`;

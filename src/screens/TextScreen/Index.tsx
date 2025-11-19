@@ -1,11 +1,12 @@
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import React, { useState, useEffect, useRef } from "react";
 import { View, Image, Platform } from "react-native";
-import { Container, LyricContainer, Button, Input } from "./Style";
+import { Container, LyricContainer, Button, Input, ModalDesc, ModalTitle } from "./Style";
 import { AILyricContextType, MackleProps } from "./Types";
 import api from "../../../util/api";
 import colors from "../../../theme/colors";
 import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet/src";
+import { Text } from "react-native-paper";
 
 type RootTabParamList = {
   // NOT THE ONLY IMPLEMENTATION OF THIS! (Remember to edit all versions of this variable when altering)
@@ -194,39 +195,3 @@ export default function AI_LyricScreen({ route, navigation }: Props) {
     </Container>
   );
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-import styled from "@emotion/native";
-import { moderateVerticalScale } from "react-native-size-matters";
-import { InterText } from "../../../theme/globalStyle";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { Text } from "react-native-paper";
-
-export const ModalDesc = styled(Text)`
-  color: ${colors.text};
-  text-align: justify;
-  font-size: ${moderateVerticalScale(18, 0.3)}px;
-  width: 90%;
-  margin: 0 20px 0;
-  font-family: "Inter_600SemiBold";
-  max-width: 750px;
-  background-color: ${colors.activeIndicatorBackground};
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 25px;
-`;
-
-export const ModalTitle = styled(Text)`
-  color: ${colors.text};
-  font-family: "Inter_700Bold";
-  text-align: center;
-  /* font-weight: bold; */
-  font-size: ${moderateVerticalScale(26, 0.3)}px;
-  /* margin-top: ${moderateVerticalScale(20, 0.3)}px; */
-  margin-left: 8px;
-  margin-right: 8px;
-  /* position: absolute;
-  top: 0px; */
-  max-width: 650px;
-`;

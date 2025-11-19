@@ -1,16 +1,18 @@
 import { View, Text, Platform, Alert } from "react-native";
 import React from "react";
 import colors from "../../../../theme/colors";
+import { moderateVerticalScale } from "react-native-size-matters";
+import { DescriptionContainer } from "../Style";
 
 export default function CakeDescription({
   description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae sit itaque incidunt labore!",
-  handlePress = () => {},
+  handlePress = () => { },
 }: {
   description: string;
   handlePress: any;
 }) {
   return (
-    <Container onPress={handlePress}>
+    <DescriptionContainer onPress={handlePress}>
       <Text
         style={{
           color: colors.text,
@@ -35,21 +37,6 @@ export default function CakeDescription({
       >
         {description}
       </Text>
-    </Container>
+    </DescriptionContainer>
   );
 }
-
-import styled from "@emotion/native";
-import { moderateVerticalScale } from "react-native-size-matters";
-
-const Container = styled.TouchableOpacity`
-  width: 100%;
-  max-width: 650px;
-  background-color: ${colors.background};
-  border-radius: 10px;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 5px;
-  padding: 10px 20px;
-  border: 2px solid ${colors.activeIndicatorBackground};
-`;

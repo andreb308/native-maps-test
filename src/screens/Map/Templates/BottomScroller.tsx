@@ -3,11 +3,24 @@ import { useNavigation } from "@react-navigation/native";
 import Carousel from "react-native-reanimated-carousel";
 
 import { useAppContext } from "../../AppContext";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../../../routes/stack.routes.js";
+import colors from "../../../../theme/colors";
+import { StarRatingDisplay } from "react-native-star-rating-widget";
+import React, { useState } from "react";
+import { LatLng } from "react-native-maps";
+import {
+  BottomCard,
+  FlexColumn,
+  StoreName,
+  StoreDesc,
+  PriceContainer,
+  Price,
+  PriceType,
+  CARD_HEIGHT,
+} from "../Style";
 
-const { width, height } = Dimensions.get("window");
-const CARD_HEIGHT = 80;
-const CARD_WIDTH = width * 0.85;
-const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
+const { width } = Dimensions.get("window");
 
 export default function BottomScroller() {
   const { data, handleFetch, mapRef } = useAppContext();
@@ -42,7 +55,7 @@ export default function BottomScroller() {
           }
           renderItem={({ item }) => (
             <BottomCard
-            activeOpacity={0.7}
+              activeOpacity={0.7}
               loop={loop}
               onLongPress={() => setLoop((l) => !l)}
               key={item.storeID}
@@ -79,78 +92,3 @@ export default function BottomScroller() {
     </>
   );
 }
-
-/********************************************************/
-import styled from "@emotion/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../routes/stack.routes.js";
-import colors from "../../../../theme/colors";
-import { StarRatingDisplay } from "react-native-star-rating-widget";
-import React, { useState } from "react";
-import { InterText } from "../../../../theme/globalStyle";
-import { LatLng } from "react-native-maps";
-
-const BottomCard = styled.TouchableOpacity<{ loop: boolean }>`
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  background-color: #fffbda;
-  border-radius: 10px;
-  /* border-top-right-radius: 50px; */
-  margin: 0 10px;
-  box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.3); /* Standard CSS box-shadow */
-  border: 2px ${(p) => (p.loop ? "solid" : "dashed")} ${colors.activeIndicatorBackground};
-  height: ${CARD_HEIGHT}px;
-  width: ${CARD_WIDTH}px;
-  padding: 10px 20px;
-  margin-left: ${SPACING_FOR_CARD_INSET}px;
-  overflow: hidden;
-`;
-
-const FlexColumn = styled.View`
-  width: 60%;
-  height: 90%;
-  flex-direction: column;
-  position: relative;
-  /* background-color: pink; */
-`;
-
-const StoreName = styled(InterText)`
-  height: 50%;
-  font-family: "Inter_700Bold";
-  /* font-weight: 700; */
-  font-size: 26px;
-  text-align: center;
-`;
-
-const StoreDesc = styled(InterText)`
-  height: 50%;
-  text-align: center;
-  font-size: 12px;
-`;
-
-const PriceContainer = styled.View`
-  /* padding: 0 10px; */
-  width: 40%;
-  height: 90%;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
-`;
-
-const Price = styled(InterText)`
-  /* width: 100%; */
-  height: 40%;
-  text-align: center;
-  font-size: 26px;
-  font-family: "Inter_700Bold";
-  color: ${colors.text};
-`;
-
-const PriceType = styled(InterText)`
-  font-size: 12px;
-  /* width: 100%; */
-  /* text-align: right; */
-  font-family: "Inter_700Bold";
-  color: ${colors.text};
-`;

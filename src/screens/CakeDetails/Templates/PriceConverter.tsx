@@ -1,5 +1,11 @@
 import { View, Text, Dimensions, Platform } from "react-native";
 import React from "react";
+import {
+  PriceConverterContainer,
+  Price,
+  PriceDesc,
+  PriceDivider,
+} from "../Style";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -32,69 +38,27 @@ export default function PriceConverter({
   const pricePerSlice = 0.05 * pricePerKg;
 
   return (
-    <Container>
+    <PriceConverterContainer>
       <Price variant="headlineSmall">
-        {`R$${
-          priceType === "/kg" ? price.toFixed(2).replace('.', ',') : pricePerKg.toFixed(2).replace('.', ',')
-        }\n`}
+        {`R$${priceType === "/kg" ? price.toFixed(2).replace('.', ',') : pricePerKg.toFixed(2).replace('.', ',')
+          }\n`}
         <PriceDesc variant="labelLarge">por quilo</PriceDesc>
       </Price>
 
-      <Divider />
+      <PriceDivider />
 
       <Price variant="headlineSmall">
         {`R$${pricePer350g.toFixed(2).replace('.', ',')}\n`}
         <PriceDesc variant="labelLarge">por 350g</PriceDesc>
       </Price>
 
-      <Divider />
+      <PriceDivider />
 
       <Price variant="headlineSmall">
-        {`R$${
-          priceType === "/fatia" ? price.toFixed(2).replace('.', ',') : pricePerSlice.toFixed(2).replace('.', ',')
-        }\n`}
+        {`R$${priceType === "/fatia" ? price.toFixed(2).replace('.', ',') : pricePerSlice.toFixed(2).replace('.', ',')
+          }\n`}
         <PriceDesc variant="labelLarge">por fatia</PriceDesc>
       </Price>
-    </Container>
+    </PriceConverterContainer>
   );
 }
-
-import styled from "@emotion/native";
-import colors from "../../../../theme/colors";
-import { moderateVerticalScale } from "react-native-size-matters";
-import { InterText } from "../../../../theme/globalStyle";
-
-const Container = styled.View`
-  width: 100%;
-  max-width: 650px;
-  height: 12.5%;
-  max-height: 120px;
-  background-color: #ffec9e;
-  border-radius: 10px;
-  border: 2px solid ${colors.activeIndicatorBackground};
-  align-items: center;
-  justify-content: space-around;
-  padding: 0 20px;
-  flex-direction: row;
-  gap: 15px;
-`;
-
-const Price = styled(InterText)`
-  text-align: center;
-  font-size: ${moderateVerticalScale(24, 0.3)}px;
-  /* Suggested code may be subject to a license. Learn more: ~LicenseLog:2955892092. */
-  font-family: "Inter_700Bold";
-  color: ${colors.text};
-`;
-
-const PriceDesc = styled(Price)`
-  font-family: "Inter_600SemiBold";
-  font-size: ${moderateVerticalScale(16, 0.3)}px;
-`;
-
-const Divider = styled.View`
-  height: 70%;
-  width: 2.5px;
-  border-radius: 50px;
-  background-color: #909090;
-`;

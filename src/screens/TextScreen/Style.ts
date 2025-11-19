@@ -1,5 +1,8 @@
 import Constants from "expo-constants";
 import styled from "@emotion/native";
+import { Text } from "react-native-paper";
+import colors from "../../../theme/colors";
+import { moderateVerticalScale } from "react-native-size-matters";
 
 export const Container = styled.View`
   /* gap: 20px; */
@@ -43,4 +46,33 @@ export const Input = styled.TextInput`
   margin-top: 20px;
   padding-left: 50px;
   border: 2px solid #eaeaea;
+`;
+
+// From Index.tsx
+export const ModalDesc = styled(Text)`
+  color: ${colors.text};
+  text-align: justify;
+  font-size: ${moderateVerticalScale(18, 0.3)}px;
+  width: 90%;
+  margin: 0 20px 0;
+  font-family: "Inter_600SemiBold";
+  max-width: 750px;
+  background-color: ${colors.activeIndicatorBackground};
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 25px;
+`;
+
+export const ModalTitle = styled(Text)`
+  color: ${colors.text};
+  font-family: "Inter_700Bold";
+  text-align: center;
+  /* font-weight: bold; */
+  font-size: ${moderateVerticalScale(26, 0.3)}px;
+  /* margin-top: ${moderateVerticalScale(20, 0.3)}px; */
+  margin-left: 8px;
+  margin-right: 8px;
+  /* position: absolute;
+  top: 0px; */
+  max-width: 650px;
 `;

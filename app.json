@@ -2,7 +2,7 @@
   "expo": {
     "name": "Bolo Certo",
     "slug": "native-maps-test",
-    "version": "3.4.0",
+    "version": "3.4.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -42,6 +44,8 @@
     "updates": {
       "url": "https://u.expo.dev/0eed0372-f9fb-40df-913b-be5cee3f25e7"
     },
-    "plugins": ["expo-font"]
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

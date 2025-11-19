@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { useAppContext } from "../../AppContext";
 import { GeocodeInfo } from "../Types";
 import { Keyboard, TextInput } from "react-native";
+import { SearchContainer, StyledInput, InputIcon } from "../Style";
+import colors from "../../../../theme/colors";
 
 const ANIMATION_DURATION = 1000;
 
@@ -76,35 +78,3 @@ function CitySearch() {
 }
 
 export default CitySearch;
-
-/***************************************************/
-
-import styled from "@emotion/native";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import colors from "../../../../theme/colors";
-
-export const SearchContainer = styled.View`
-  position: relative;
-  background-color: transparent;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 60px;
-  margin-top: 48px;
-  padding: 0 20px;
-`;
-
-export const StyledInput = styled.TextInput`
-  background-color: #fffbda;
-  width: 100%;
-  height: 60px;
-  border-radius: 10px;
-  position: relative;
-  padding-left: 50px;
-  border: 2px solid #eaeaea;
-`;
-
-export const InputIcon = styled(Icon)`
-  position: absolute;
-  left: 32px;
-`;
